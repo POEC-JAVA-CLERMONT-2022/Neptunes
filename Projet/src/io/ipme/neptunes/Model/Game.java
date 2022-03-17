@@ -4,6 +4,17 @@ public class Game {
     private String gameUrl;
     private boolean isPaused = false;
 
+    /**
+     * constructor
+     */
+    public Game(String gameUrl, boolean isPaused){
+        this.gameUrl = gameUrl;
+        this.isPaused = isPaused;
+    }
+
+    /**
+     *getters/setters
+     */
     public String getGameUrl() {
         return gameUrl;
     }
