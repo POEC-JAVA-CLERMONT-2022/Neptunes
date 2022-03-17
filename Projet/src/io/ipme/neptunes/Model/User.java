@@ -1,4 +1,4 @@
-package io.ipme.neptunes;
+package io.ipme.neptunes.Model;
 
 public class User {
 	/*
