@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import io.ipme.neptunes.Model.User;
 
-public class InMemoryDataProvider implements DataProvider {
+public class InMemoryUserDataProvider implements UserDataProvider {
 	
 	private ArrayList<User> users = new ArrayList<User>();
 

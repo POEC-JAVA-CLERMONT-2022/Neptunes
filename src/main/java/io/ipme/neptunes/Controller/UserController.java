@@ -15,7 +15,7 @@ private UserService userService = new UserService();
 	
 	@GetMapping("/users")
 	public ArrayList<User> getUsers() {
-		return userService.getAll(); 
+		return userService.getAll();
 	}
 	
 	

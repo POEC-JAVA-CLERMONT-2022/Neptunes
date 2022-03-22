@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import io.ipme.neptunes.Model.User;
 
-public interface DataProvider {
+public interface UserDataProvider {
 	
 	public ArrayList<User> getAll();
 	
