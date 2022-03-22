@@ -1,4 +1,4 @@
-package io.ipme.neptunes.data;
+package io.ipme.neptunes.Data;
 
 import java.util.ArrayList;
 

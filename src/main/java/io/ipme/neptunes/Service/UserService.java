@@ -2,9 +2,9 @@ package io.ipme.neptunes.Service;
 
 import java.util.ArrayList;
 
+import io.ipme.neptunes.Data.DataProvider;
+import io.ipme.neptunes.Data.InMemoryDataProvider;
 import io.ipme.neptunes.Model.User;
-import io.ipme.neptunes.data.DataProvider;
-import io.ipme.neptunes.data.InMemoryDataProvider;
 
 public class UserService {
 	private DataProvider dataProvider;

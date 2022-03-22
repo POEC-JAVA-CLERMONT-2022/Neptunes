@@ -3,8 +3,8 @@ package io.ipme.neptunes;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import io.ipme.neptunes.Data.InMemoryDataProvider;
 import io.ipme.neptunes.Model.User;
-import io.ipme.neptunes.data.InMemoryDataProvider;
 
 @SpringBootApplication
 public class NeptunesApplication {

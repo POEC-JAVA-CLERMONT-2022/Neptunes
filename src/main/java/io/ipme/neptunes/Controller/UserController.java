@@ -1,4 +1,4 @@
-package io.ipme.neptunes.controller;
+package io.ipme.neptunes.Controller;
 
 import java.util.ArrayList;
 
