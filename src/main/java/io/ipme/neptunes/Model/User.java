@@ -44,6 +44,10 @@ public class User {
         return isPremium;
     }
 
-
+	@Override
+	public String toString() {
+		return "User [userName=" + userName + ", email=" + email + ", password=" + password + ", avatar=" + avatar
+				+ ", isPremium=" + isPremium + "]";
+	}
 
 }
