@@ -1,41 +1,53 @@
 package io.ipme.neptunes.Model;
 
-import java.util.ArrayList;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.UUID;
+
+@Entity
 public class Playlist {
 
-    //Attributes
-    private String playlistName;
-    private Boolean isRandom;
-    private ArrayList<Track> tracks;
-
     //Constructor
-    public Playlist(String playlistName,ArrayList<Track> tracks, Boolean isRandom){
-        this.playlistName = playlistName;
-        this.isRandom = isRandom;
-        this.tracks = tracks;
+    public Playlist(){
+
     }
 
-    //Getters
-    public String getPlaylistName() {
-        return playlistName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
+
+    @Column(name = "is_random", length = 100)
+    private Boolean isRandom;
+
+    @JoinColumn(name = "track_id")
+    @ManyToMany(fetch = FetchType.EAGER)
+    private ArrayList<Track> track;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Boolean getRandom() {
         return isRandom;
     }
 
-    public ArrayList<Track> getTracks() {
-        return tracks;
+    public void setRandom(Boolean random) {
+        isRandom = random;
     }
 
-    @Override
-    public String toString() {
-        return "Playlist{" +
-                "playlistName='" + playlistName + '\'' +
-                ", isRandom=" + isRandom +"\n"+
-                ", tracks=" + tracks +"\n"+
-                '}';
+    public ArrayList<Track> getTrack() {
+        return track;
+    }
+
+    public void setTrack(ArrayList<Track> track) {
+        this.track = track;
     }
 
 }
