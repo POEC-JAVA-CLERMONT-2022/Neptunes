@@ -1,4 +1,4 @@
-package io.ipme.neptunes.Controller;
+/*package io.ipme.neptunes.Controller;
 
 import java.util.ArrayList;
 
@@ -26,4 +26,4 @@ private UserService userService = new UserService();
 		}
 		return "OK"; 		
 	}
-}
+}*/
