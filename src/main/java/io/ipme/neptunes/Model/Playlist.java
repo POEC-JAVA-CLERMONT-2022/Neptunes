@@ -3,7 +3,7 @@ package io.ipme.neptunes.Model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -24,7 +24,7 @@ public class Playlist {
 
     @JoinColumn(name = "track_id")
     @ManyToMany(fetch = FetchType.EAGER)
-    private ArrayList<Track> track;
+    private List<Track> track;
 
     public UUID getId() {
         return id;
@@ -42,11 +42,11 @@ public class Playlist {
         isRandom = random;
     }
 
-    public ArrayList<Track> getTrack() {
+    public List<Track> getTrack() {
         return track;
     }
 
-    public void setTrack(ArrayList<Track> track) {
+    public void setTrack(List<Track> track) {
         this.track = track;
     }
 
