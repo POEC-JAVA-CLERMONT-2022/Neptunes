@@ -1,32 +1,41 @@
 package io.ipme.neptunes.Model;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+
+@Entity
 public class Track {
-    /*
-     * 	Attributes
-     */
-    private String trackName;
-    private String trackAuthor;
-    private Integer trackReleaseYear;
-    private String trackURL;
+
+    public Track(){
+
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
-    /*
-     * 	Constructors
-     */
-    public Track(String trackName, String trackAuthor, Integer trackReleaseYear, String trackURL) {
-        this.trackName = trackName;
-        this.trackAuthor = trackAuthor;
-        this.trackReleaseYear = trackReleaseYear;
-        this.trackURL = trackURL;
+    @NotNull
+    @Column(name = "track_Name")
+    private String trackName;
+
+    @NotNull
+    @Column(name = "track_Author")
+    private String trackAuthor;
+
+    @NotNull
+    @Column(name = "track_Release_Year")
+    private Integer trackReleaseYear;
+
+    @NotNull
+    @Column(name = "track_URL")
+    private String trackURL;
+
+    public Integer getId() {
+        return id;
     }
 
-    public Track(String trackName) {
-        this.trackName = trackName;
-    }
-
-    /*
-     * 	Getters
-     */
     public String getTrackName() {
         return trackName;
     }
@@ -43,24 +52,4 @@ public class Track {
         return trackURL;
     }
 
-
-    @Override
-    public String toString() {
-        return "Track{" +
-                "trackName='" + trackName + '\'' +
-                "| trackAuthor='" + trackAuthor + '\'' +
-                "| trackReleaseYear=" + trackReleaseYear +
-                "| trackURL='" + trackURL + '\'' +'\n'+
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Track)) return false;
-
-        Track track = (Track) o;
-
-        return trackName != null ? trackName.equals(track.trackName) : track.trackName == null;
-    }
 }
