@@ -3,13 +3,10 @@ package io.ipme.neptunes.Model;
 import jdk.jfr.Enabled;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
-@Enabled
+@Entity
 public class Theme {
 
     @Id
