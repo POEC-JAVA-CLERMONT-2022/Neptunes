@@ -24,9 +24,6 @@ public class Game {
     @Column(name = "is_paused")
     private Boolean isPaused;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Playlist playlist;
-
     /**
      *getters/setters
      */
@@ -53,14 +50,6 @@ public class Game {
 
     public void setPaused(Boolean paused) {
         isPaused = paused;
-    }
-
-    public Playlist getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(Playlist playlist) {
-        this.playlist = playlist;
     }
 
 }
