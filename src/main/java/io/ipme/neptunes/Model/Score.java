@@ -18,7 +18,7 @@ public class Score {
 
     @JoinColumn(name = "game_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User gameId;
+    private Game gameId;
 
     public Long getId() {
         return id;
@@ -44,11 +44,11 @@ public class Score {
         this.userId = userId;
     }
 
-    public User getGameId() {
+    public Game getGameId() {
         return gameId;
     }
 
-    public void setGameId(User gameId) {
+    public void setGameId(Game gameId) {
         this.gameId = gameId;
     }
 

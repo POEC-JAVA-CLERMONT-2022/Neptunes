@@ -3,6 +3,7 @@ package io.ipme.neptunes.Model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -25,6 +26,9 @@ public class Game {
 
     @Column(name = "is_paused")
     private Boolean isPaused;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Score> score;
 
     /**
      *getters/setters
