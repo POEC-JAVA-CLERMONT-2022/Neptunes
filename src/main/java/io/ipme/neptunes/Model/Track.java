@@ -1,8 +1,10 @@
 package io.ipme.neptunes.Model;
 
 import com.sun.istack.NotNull;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Track {
@@ -14,7 +16,8 @@ public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    private UUID id;
 
     @NotNull
     @Column(name = "track_Name")
