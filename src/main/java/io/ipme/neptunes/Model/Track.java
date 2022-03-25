@@ -1,10 +1,9 @@
 package io.ipme.neptunes.Model;
 
 import com.sun.istack.NotNull;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.Collection;
 
 @Entity
 public class Track {
@@ -14,10 +13,9 @@ public class Track {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @NotNull
     @Column(name = "track_Name")
@@ -35,7 +33,7 @@ public class Track {
     @Column(name = "track_URL")
     private String trackURL;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -55,4 +53,14 @@ public class Track {
         return trackURL;
     }
 
+    @ManyToMany
+    private Collection<Playlist> playlist;
+
+    public Collection<Playlist> getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Collection<Playlist> playlist) {
+        this.playlist = playlist;
+    }
 }

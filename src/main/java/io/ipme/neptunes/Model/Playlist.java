@@ -1,10 +1,8 @@
 package io.ipme.neptunes.Model;
 
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Playlist {
@@ -15,22 +13,21 @@ public class Playlist {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "is_random", length = 100)
     private Boolean isRandom;
 
-    @JoinColumn(name = "track_id")
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Track> track;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
+    private List<Track> tracks;
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -43,11 +40,11 @@ public class Playlist {
     }
 
     public List<Track> getTrack() {
-        return track;
+        return tracks;
     }
 
     public void setTrack(List<Track> track) {
-        this.track = track;
+        this.tracks = track;
     }
 
 }

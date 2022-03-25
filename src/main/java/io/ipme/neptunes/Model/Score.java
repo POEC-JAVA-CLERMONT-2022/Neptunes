@@ -1,16 +1,13 @@
 package io.ipme.neptunes.Model;
 
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class Score {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "score")
     private Integer score;
@@ -22,5 +19,37 @@ public class Score {
     @JoinColumn(name = "game_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User gameId;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public User getUserId() {
+        return userId;
+    }
+
+    public void setUserId(User userId) {
+        this.userId = userId;
+    }
+
+    public User getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(User gameId) {
+        this.gameId = gameId;
+    }
 
 }

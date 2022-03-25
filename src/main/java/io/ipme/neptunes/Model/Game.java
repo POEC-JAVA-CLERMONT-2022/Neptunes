@@ -16,9 +16,9 @@ public class Game {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "game_url", length = 100)
     private String gameUrl;
@@ -30,11 +30,11 @@ public class Game {
      *getters/setters
      */
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,11 +1,6 @@
 package io.ipme.neptunes.Model;
 
-import net.bytebuddy.implementation.bind.annotation.Default;
-import org.hibernate.annotations.Type;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 public class User {
@@ -14,10 +9,9 @@ public class User {
      * 	Attributes
      */
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "user_name", length = 255)
     private String userName;
@@ -40,7 +34,7 @@ public class User {
     public User() {
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
@@ -67,7 +61,7 @@ public class User {
     /*
     *   Setters
     */
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
