@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Track {
@@ -32,6 +33,9 @@ public class Track {
     @NotNull
     @Column(name = "track_URL")
     private String trackURL;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    private List<Theme> themes;
 
     public Long getId() {
         return id;

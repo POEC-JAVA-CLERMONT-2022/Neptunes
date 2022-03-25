@@ -4,6 +4,7 @@ import jdk.jfr.Enabled;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -16,6 +17,9 @@ public class Theme {
 
     @Column(name = "theme", length = 100)
     private String theme;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
+    private List<Track> tracks;
 
     public Theme() {
 
