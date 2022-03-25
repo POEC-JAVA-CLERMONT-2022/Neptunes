@@ -28,6 +28,9 @@ public class Game {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Score> score;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Playlist playlist;
+
     /**
      *getters/setters
      */
@@ -72,6 +75,4 @@ public class Game {
         this.playlist = playlist;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Playlist playlist;
 }
