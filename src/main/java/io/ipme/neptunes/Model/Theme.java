@@ -10,10 +10,9 @@ import java.util.UUID;
 public class Theme {
 
     @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "theme", length = 100)
     private String theme;
@@ -22,7 +21,7 @@ public class Theme {
 
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
