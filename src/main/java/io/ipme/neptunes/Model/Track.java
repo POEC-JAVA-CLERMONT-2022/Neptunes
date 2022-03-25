@@ -35,7 +35,7 @@ public class Track {
     @Column(name = "track_URL")
     private String trackURL;
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
