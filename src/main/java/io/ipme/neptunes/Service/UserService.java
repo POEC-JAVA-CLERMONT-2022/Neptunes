@@ -1,28 +1,21 @@
-/*
 package io.ipme.neptunes.Service;
 
-import java.util.ArrayList;
-
-import io.ipme.neptunes.Data.UserDataProvider;
-import io.ipme.neptunes.Data.InMemoryUserDataProvider;
 import io.ipme.neptunes.Model.User;
+import io.ipme.neptunes.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@Service
 public class UserService {
-	private UserDataProvider dataProvider;
-	
-	public UserService() {
-		dataProvider = new InMemoryUserDataProvider(); 
+
+    @Autowired
+	private UserRepository userRepository;
+
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
-	
-	public ArrayList<User> getAll() {
-		return dataProvider.getAll();
-	}
-	
-	public void Add(User user) {
-		if(user == null || user.getUserName() == null) {
-			throw new IllegalArgumentException("User or user name is invalid"); 
-		}
-		dataProvider.add(user);
-	}
+
+
 }
-*/
