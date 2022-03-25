@@ -1,7 +1,6 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class User {
@@ -28,9 +27,6 @@ public class User {
 
     @Column(name = "is_Premium", nullable = false)
     private Boolean isPremium;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Score> score;
 
 
     /*

@@ -2,7 +2,6 @@ package io.ipme.neptunes.Model;
 
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Game {
@@ -24,9 +23,6 @@ public class Game {
 
     @Column(name = "is_paused")
     private Boolean isPaused;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Score> score;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Playlist playlist;
@@ -57,14 +53,6 @@ public class Game {
 
     public void setPaused(Boolean paused) {
         isPaused = paused;
-    }
-
-    public List<Score> getScore() {
-        return score;
-    }
-
-    public void setScore(List<Score> score) {
-        this.score = score;
     }
 
     public Playlist getPlaylist() {
