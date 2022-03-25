@@ -23,6 +23,13 @@ public class Playlist {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
     private List<Track> tracks;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Game> games;
+
+    /**
+     *getters/setters
+     */
+
     public Long getId() {
         return id;
     }
@@ -39,12 +46,20 @@ public class Playlist {
         isRandom = random;
     }
 
-    public List<Track> getTrack() {
+    public List<Track> getTracks() {
         return tracks;
     }
 
-    public void setTrack(List<Track> track) {
-        this.tracks = track;
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
 }

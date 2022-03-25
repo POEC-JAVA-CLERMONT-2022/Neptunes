@@ -1,10 +1,8 @@
 package io.ipme.neptunes.Model;
 
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Game {
@@ -30,6 +28,9 @@ public class Game {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Score> score;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private Playlist playlist;
+
     /**
      *getters/setters
      */
@@ -42,12 +43,36 @@ public class Game {
         this.id = id;
     }
 
+    public String getGameUrl() {
+        return gameUrl;
+    }
+
+    public void setGameUrl(String gameUrl) {
+        this.gameUrl = gameUrl;
+    }
+
     public Boolean getPaused() {
         return isPaused;
     }
 
     public void setPaused(Boolean paused) {
         isPaused = paused;
+    }
+
+    public List<Score> getScore() {
+        return score;
+    }
+
+    public void setScore(List<Score> score) {
+        this.score = score;
+    }
+
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
     }
 
 }
