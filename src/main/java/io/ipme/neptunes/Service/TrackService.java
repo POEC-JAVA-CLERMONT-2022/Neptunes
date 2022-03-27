@@ -29,4 +29,14 @@ public class TrackService {
     public void remove(Integer id){
         trackRepository.deleteById(id);
     }
+
+    public void update(Track track, Integer id){
+        Track trackToUpdate  = trackRepository.getById(id);
+        trackToUpdate.setTrackName(track.getTrackName());
+        trackToUpdate.setTrackAuthor(track.getTrackAuthor());
+        trackToUpdate.setTrackURL(track.getTrackURL());
+        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear());
+        trackToUpdate.setPlaylist(track.getPlaylist());
+        trackRepository.save(trackToUpdate);
+    }
 }

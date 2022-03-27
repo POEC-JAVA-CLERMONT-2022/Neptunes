@@ -28,9 +28,13 @@ public class TrackController {
     public void createTrack(@RequestBody Track track) {
         trackService.save(track);
     }
-
     @PostMapping("/track/remove/{id}")
     public void createTrack(@RequestBody @PathVariable Integer id) {
         trackService.remove(id);
+    }
+
+    @PutMapping("/track/update/{id}")
+    public void updateTrack(@RequestBody Track track, @PathVariable Integer id) {
+        trackService.update(track, id);
     }
 }
