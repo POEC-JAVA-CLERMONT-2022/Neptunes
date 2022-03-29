@@ -20,10 +20,17 @@ public class ThemeService {
 
     public Optional<Theme> findById(Integer id) { return themeRepository.findById(id); }
 
-    /*public ResponseEntity<Theme> save(Theme theme) {
+    public ResponseEntity<Theme> createTheme(Theme theme) {
         themeRepository.saveAndFlush(theme);
-        return ResponseE;
-    }*/
+        return ResponseEntity.ok().build();
+    }
 
+    public void deleteTheme(Integer id) { themeRepository.deleteById(id); }
+
+    public void updateTheme(Theme theme, Integer id) {
+        Theme themeToUpdate = themeRepository.getById(id);
+        themeToUpdate.setTheme(theme.getTheme());
+        themeRepository.save(themeToUpdate);
+    }
 
 }
