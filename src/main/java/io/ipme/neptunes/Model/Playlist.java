@@ -15,7 +15,7 @@ public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "is_random", length = 100)
     private Boolean isRandom;
@@ -30,11 +30,11 @@ public class Playlist {
      *getters/setters
      */
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,4 +62,22 @@ public class Playlist {
         this.games = games;
     }
 
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "id=" + id +
+                ", isRandom=" + isRandom +
+                ", tracks=" + tracks +
+                ", games=" + games +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (isRandom != null ? isRandom.hashCode() : 0);
+        result = 31 * result + (tracks != null ? tracks.hashCode() : 0);
+        result = 31 * result + (games != null ? games.hashCode() : 0);
+        return result;
+    }
 }

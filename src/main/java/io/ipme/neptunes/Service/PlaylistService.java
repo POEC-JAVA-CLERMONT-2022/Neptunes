@@ -1,34 +1,44 @@
-/*
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Playlist;
-import io.ipme.neptunes.Model.Track;
+import io.ipme.neptunes.Repository.PlaylistRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
+@Service
 public class PlaylistService {
+    @Autowired
+    private PlaylistRepository playlistRepository;
 
-    public Playlist create(String name, ArrayList<Track> tracks){
-        return new Playlist(name, tracks,false);
+    public List<Playlist> findAll(){
+        return playlistRepository.findAll();
     }
 
-    public void put(Track track, Playlist playlistName){
-        playlistName.getTracks().add(track);
+    public Optional<Playlist> findOne(Integer id){
+        return playlistRepository.findById(id);
     }
 
-    public void removeTrack(Track track, Playlist playlistName) {
-        try {
-            playlistName.getTracks().remove(track);
-        } catch (Exception e){
-            System.out.println(e.getMessage());
+    public void save(Playlist playlist){
+        playlistRepository.saveAndFlush(playlist);
+    }
+
+    public void remove(Integer id){
+        playlistRepository.deleteById(id);
+    }
+
+    public void update(Playlist playlist, Integer id){
+        Playlist playlistToUpdate  = playlistRepository.getById(id);
+        playlistToUpdate.setRandom(playlist.getRandom());
+
+        if (playlist.getTracks() != null) {
+            playlistToUpdate.setTracks(playlist.getTracks());
         }
+        if (playlist.getGames() != null) {
+            playlistToUpdate.setGames(playlist.getGames());
+        }
+        playlistRepository.save(playlistToUpdate);
     }
-
-    public void showAll(Playlist playlistName) {
-        System.out.println(playlistName.toString());
-    }
-
-    public void show(Track track) {
-        System.out.println(track.toString());
-    }
-}*/
+}
