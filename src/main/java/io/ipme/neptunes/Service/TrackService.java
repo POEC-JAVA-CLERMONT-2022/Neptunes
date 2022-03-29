@@ -23,6 +23,9 @@ public class TrackService {
     }
 
     public void save(Track track){
+        if (track == null){
+            throw new IllegalArgumentException();
+        }
         trackRepository.saveAndFlush(track);
     }
 
@@ -36,7 +39,10 @@ public class TrackService {
         trackToUpdate.setTrackAuthor(track.getTrackAuthor());
         trackToUpdate.setTrackURL(track.getTrackURL());
         trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear());
-        trackToUpdate.setPlaylist(track.getPlaylist());
+        if(!track.getPlaylist().isEmpty())
+        {
+            trackToUpdate.setPlaylist(track.getPlaylist());
+        }
         trackRepository.save(trackToUpdate);
     }
 }

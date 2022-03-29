@@ -66,7 +66,7 @@ public class PlaylistController {
     }
 
     @PatchMapping("/playlists/{id}")
-    public ResponseEntity<Playlist> deletePlaylist(@RequestBody Playlist playlist, @PathVariable Integer id) {
+    public ResponseEntity<Playlist> updatePlaylist(@RequestBody Playlist playlist, @PathVariable Integer id) {
 
         try {
             if (id != null){
