@@ -1,20 +1,15 @@
 package io.ipme.neptunes.Model;
 
-import org.w3c.dom.stylesheets.LinkStyle;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 public class User {
 
-    /*
-     * 	Attributes
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "user_name", length = 255)
     private String userName;
@@ -34,13 +29,9 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
-    /*
-     * 	Getters
-     */
-    public User() {
-    }
+    public User() {}
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -64,10 +55,7 @@ public class User {
         return isPremium;
     }
 
-    /*
-    *   Setters
-    */
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
