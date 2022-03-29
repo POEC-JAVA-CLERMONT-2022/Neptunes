@@ -13,7 +13,7 @@ public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
-    private Long id;
+    private Integer id;
 
     @Column(name = "theme", length = 100)
     private String theme;
@@ -25,7 +25,7 @@ public class Theme {
 
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
