@@ -18,6 +18,8 @@
 
     <properties>
         <java.version>11</java.version>
+        <sonar.organization>poec-java-clermont-2022</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>
@@ -66,10 +68,5 @@
             </plugin>
         </plugins>
     </build>
-
-    <properties>
-        <sonar.organization>poec-java-clermont-2022</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-    </properties>
 
 </project>
