@@ -1,11 +1,7 @@
 package io.ipme.neptunes.Model;
 
-import jdk.jfr.Enabled;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 public class Theme {
@@ -21,13 +17,9 @@ public class Theme {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
     private List<Track> tracks;
 
-    public Theme() {
+    public Theme() {}
 
-    }
-
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
     public String getTheme() {
         return theme;

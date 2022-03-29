@@ -16,4 +16,5 @@ public class ThemeController {
 
     @GetMapping("/themes")
     public List<Theme> findAll() { return themeService.findAll(); }
+
 }
