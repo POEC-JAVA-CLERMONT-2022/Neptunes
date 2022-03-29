@@ -1,8 +1,10 @@
 package io.ipme.neptunes.Model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,19 +19,21 @@ public class Track {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_Name")
     private String trackName;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_Author")
     private String trackAuthor;
 
     @NotNull
+    @Min(1900)
+    @Max(2050)
     @Column(name = "track_Release_Year")
     private Integer trackReleaseYear;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_URL")
     private String trackURL;
 

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
+@Valid
 @RestController
 public class TrackController {
 
@@ -20,31 +22,32 @@ public class TrackController {
         try {
             return ResponseEntity.ok().body(trackService.findAll());
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/tracks/{id}")
     public ResponseEntity<Optional<Track>> getOne(@PathVariable Integer id){
         try {
-            if (id != null){
+            if (id != null) {
                 return ResponseEntity.ok().body(trackService.findOne(id));
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PostMapping("/tracks")
-    public ResponseEntity<Track> createTrack(@RequestBody Track track) {
+    public ResponseEntity<String> createTrack(@RequestBody Track track) {
         try {
             if (track != null){
                 trackService.save(track);
+                return ResponseEntity.ok().build();
             }
-            return ResponseEntity.status(201).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -53,22 +56,24 @@ public class TrackController {
         try {
             if (id != null){
                 trackService.remove(id);
+                return ResponseEntity.ok().build();
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PatchMapping("/tracks/{id}")
-    public ResponseEntity<Track> updateTrack(@RequestBody Track track, @PathVariable Integer id) {
+    public ResponseEntity<String> updateTrack(@RequestBody Track track, @PathVariable Integer id) {
         try {
             if (id != null && track != null){
                 trackService.update(track, id);
+                return ResponseEntity.ok().build();
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }
