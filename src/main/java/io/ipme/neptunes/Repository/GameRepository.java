@@ -1,8 +1,11 @@
-/*package io.ipme.neptunes.Repository;
+package io.ipme.neptunes.Repository;
 
 import io.ipme.neptunes.Model.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GameRepository extends JpaRepository<Game, Integer> {
-    Game findBy(Integer id);
-}*/
+import java.util.List;
+
+    public interface GameRepository extends JpaRepository<Game, Long> {
+
+        List<Game> findAll();
+    }
