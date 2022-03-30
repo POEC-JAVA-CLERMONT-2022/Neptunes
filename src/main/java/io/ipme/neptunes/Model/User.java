@@ -26,6 +26,10 @@ public class User {
     @Column(name = "is_Premium", nullable = false)
     private Boolean isPremium;
 
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
     @OneToMany(fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
