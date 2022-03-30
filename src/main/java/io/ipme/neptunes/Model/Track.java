@@ -1,8 +1,10 @@
 package io.ipme.neptunes.Model;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,19 +19,21 @@ public class Track {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_Name")
     private String trackName;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_Author")
     private String trackAuthor;
 
     @NotNull
+    @Min(1900)
+    @Max(2050)
     @Column(name = "track_Release_Year")
     private Integer trackReleaseYear;
 
-    @NotNull
+    @NotBlank
     @Column(name = "track_URL")
     private String trackURL;
 
@@ -89,5 +93,30 @@ public class Track {
 
     public Collection<Playlist> getPlaylist() {
         return playlist;
+    }
+
+    @Override
+    public String toString() {
+        return "Track{" +
+                "id=" + id +
+                ", trackName='" + trackName + '\'' +
+                ", trackAuthor='" + trackAuthor + '\'' +
+                ", trackReleaseYear=" + trackReleaseYear +
+                ", trackURL='" + trackURL + '\'' +
+                ", themes=" + themes +
+                ", playlist=" + playlist +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (trackName != null ? trackName.hashCode() : 0);
+        result = 31 * result + (trackAuthor != null ? trackAuthor.hashCode() : 0);
+        result = 31 * result + (trackReleaseYear != null ? trackReleaseYear.hashCode() : 0);
+        result = 31 * result + (trackURL != null ? trackURL.hashCode() : 0);
+        result = 31 * result + (themes != null ? themes.hashCode() : 0);
+        result = 31 * result + (playlist != null ? playlist.hashCode() : 0);
+        return result;
     }
 }
