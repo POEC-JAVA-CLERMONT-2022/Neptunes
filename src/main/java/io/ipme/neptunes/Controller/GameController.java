@@ -2,7 +2,9 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Game;
 import io.ipme.neptunes.Model.Track;
+import io.ipme.neptunes.Model.UserGame;
 import io.ipme.neptunes.Service.GameService;
+import io.ipme.neptunes.Service.UserGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,9 @@ import java.util.Optional;
 
         @Autowired
         private GameService gameService;
+
+        @Autowired
+        private UserGameService userGameService;
 
         @GetMapping("/games")
         public List<Game> getAll(){
@@ -34,4 +39,7 @@ import java.util.Optional;
         public void createGame(@RequestBody @PathVariable Integer id) {
             gameService.deleteGame(id);
         }
+
+        @GetMapping("/games/{id}/users/scores")
+        public List<UserGame> getUsersAndScores(@PathVariable Integer id) { return userGameService.findGameUsersScoreById(id); }
 }
