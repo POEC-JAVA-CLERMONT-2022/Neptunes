@@ -23,9 +23,6 @@ public class TrackService {
     }
 
     public void save(Track track){
-        if (track == null){
-            throw new IllegalArgumentException();
-        }
         trackRepository.saveAndFlush(track);
     }
 
