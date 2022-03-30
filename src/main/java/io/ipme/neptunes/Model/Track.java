@@ -93,10 +93,6 @@ public class Track {
 
     public List<Theme> getThemes(){ return themes; }
 
-    public Collection<Playlist> getPlaylist() {
-        return playlist;
-    }
-
     @Override
     public String toString() {
         return "Track{" +

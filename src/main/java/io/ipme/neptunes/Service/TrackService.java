@@ -38,7 +38,6 @@ public class TrackService {
         trackToUpdate.setTrackURL(track.getTrackURL().isBlank() ? trackToUpdate.getTrackAuthor() : track.getTrackURL());
         trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() ==  null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
         trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() ==  null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
-        trackToUpdate.setPlaylist(track.getPlaylist().isEmpty() ? trackToUpdate.getPlaylist() : track.getPlaylist());
 
         trackRepository.save(trackToUpdate);
     }
