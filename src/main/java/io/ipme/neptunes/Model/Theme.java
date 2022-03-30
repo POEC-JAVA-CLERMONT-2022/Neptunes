@@ -1,6 +1,7 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ public class Theme {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
+    @NotNull
     @Column(name = "theme", length = 100)
     private String theme;
 

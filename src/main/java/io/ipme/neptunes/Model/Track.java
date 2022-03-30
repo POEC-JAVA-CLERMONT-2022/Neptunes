@@ -91,6 +91,8 @@ public class Track {
         return trackURL;
     }
 
+    public List<Theme> getThemes(){ return themes; }
+
     public Collection<Playlist> getPlaylist() {
         return playlist;
     }
