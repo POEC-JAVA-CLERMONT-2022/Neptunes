@@ -52,7 +52,7 @@ public class TrackController {
     }
 
     @DeleteMapping("/tracks/{id}")
-    public ResponseEntity<Track> removeTrack(@RequestBody @PathVariable Integer id) {
+    public ResponseEntity<String> removeTrack(@RequestBody @PathVariable Integer id) {
         try {
             if (id != null){
                 trackService.remove(id);
@@ -60,7 +60,7 @@ public class TrackController {
             }
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
