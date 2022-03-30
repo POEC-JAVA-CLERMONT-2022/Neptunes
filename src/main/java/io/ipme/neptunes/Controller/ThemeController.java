@@ -2,11 +2,12 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Service.ThemeService;
+import io.ipme.neptunes.Service.dto.ThemeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Valid
@@ -17,7 +18,7 @@ public class ThemeController {
     private ThemeService themeService;
 
     @GetMapping("/themes")
-    public List<Theme> findAll() { return themeService.findAll(); }
+    public ArrayList<ThemeDTO> findAll() { return themeService.findAll(); }
 
     @GetMapping("/themes/{id}")
     public Optional<Theme> findById(@PathVariable Integer id) { return themeService.findById(id); }
