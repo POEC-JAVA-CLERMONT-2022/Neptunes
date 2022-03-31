@@ -25,5 +25,7 @@ class NeptunesApplicationTests {
     void gameTest(){
         //création d'une game test.
         Game game1 = new Game();
+        game1.setGameUrl("pouet");
+        gameRepository.saveAndFlush(game1);
     }
 }
