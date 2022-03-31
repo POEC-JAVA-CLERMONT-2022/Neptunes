@@ -2,6 +2,7 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Service.PlaylistService;
+import io.ipme.neptunes.Service.dto.PlaylistDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,26 +17,25 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @GetMapping("/playlists")
-    public ResponseEntity<List<Playlist>> getAll(){
+    public ResponseEntity<List<PlaylistDto>> getAll(){
 
         try {
             return ResponseEntity.ok().body(playlistService.findAll());
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @GetMapping("/playlists/{id}")
-    public ResponseEntity<Optional<Playlist>> getOne(@PathVariable Integer id) {
+    public ResponseEntity<PlaylistDto> getOne(@PathVariable Integer id) {
 
-        Optional<Playlist> playlist = Optional.empty();
         try {
             if (id != null) {
-              playlist = playlistService.findOne(id);
+                return ResponseEntity.ok().body(playlistService.findOne(id));
             }
-            return ResponseEntity.ok().body(playlist);
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            return ResponseEntity.status(400).build();
+            return ResponseEntity.badRequest().build();
         }
     }
 
