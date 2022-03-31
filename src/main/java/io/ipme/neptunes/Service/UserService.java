@@ -2,11 +2,13 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.User;
 import io.ipme.neptunes.Repository.UserRepository;
+import io.ipme.neptunes.Service.dto.UserDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -14,9 +16,21 @@ public class UserService {
     @Autowired
 	private UserRepository userRepository;
 
-	public List<User> findAll() { return userRepository.findAll(); }
+	public List<UserDTO> findAll() {
+		ArrayList<UserDTO> userDTOList = new ArrayList<>();
+		for (User user : userRepository.findAll()) {
+			UserDTO userDTO = new UserDTO();
+			BeanUtils.copyProperties(user, userDTO);
+			userDTOList.add(userDTO);
+		}
+		return userDTOList;
+	}
 
-	public Optional<User> findById(Integer id) { return userRepository.findById(id); }
+	public UserDTO findById(Integer id) {
+		UserDTO userDTO = new UserDTO();
+		BeanUtils.copyProperties(userRepository.findById(id).orElse(new User("Unknown user")), userDTO);
+		return userDTO;
+	}
 
 	public void createUser(User user) { userRepository.saveAndFlush(user); }
 

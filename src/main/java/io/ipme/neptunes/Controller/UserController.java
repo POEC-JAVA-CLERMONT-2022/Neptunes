@@ -1,5 +1,6 @@
 package io.ipme.neptunes.Controller;
 
+import io.ipme.neptunes.Service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +17,10 @@ public class UserController {
     private UserService userService;
 	
 	@GetMapping("/users")
-	public List<User> findAll() {
-		return userService.findAll();
-	}
+	public List<UserDTO> findAll() { return userService.findAll(); }
 
 	@GetMapping("/users/{id}")
-	public Optional<User> findById(@PathVariable Integer id) { return userService.findById(id); }
+	public UserDTO findById(@PathVariable Integer id) { return userService.findById(id); }
 
 	@PostMapping("/users")
 	public void createUser(@RequestBody User user) { userService.createUser(user); }
