@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@Valid
 @RestController
 public class TrackController {
 
@@ -39,7 +38,7 @@ public class TrackController {
     }
 
     @PostMapping("/tracks")
-    public ResponseEntity<String> createTrack(@RequestBody Track track) {
+    public ResponseEntity<String> createTrack(@RequestBody @Valid Track track) {
         try {
             if (track != null){
                 trackService.save(track);
@@ -52,7 +51,7 @@ public class TrackController {
     }
 
     @DeleteMapping("/tracks/{id}")
-    public ResponseEntity<String> removeTrack(@RequestBody @PathVariable Integer id) {
+    public ResponseEntity<String> removeTrack(@RequestBody @Valid @PathVariable Integer id) {
         try {
             if (id != null){
                 trackService.remove(id);
@@ -65,7 +64,7 @@ public class TrackController {
     }
 
     @PatchMapping("/tracks/{id}")
-    public ResponseEntity<String> updateTrack(@RequestBody Track track, @PathVariable Integer id) {
+    public ResponseEntity<String> updateTrack(@RequestBody Track track, @Valid @PathVariable Integer id) {
         try {
             if (id != null && track != null){
                 trackService.update(track, id);

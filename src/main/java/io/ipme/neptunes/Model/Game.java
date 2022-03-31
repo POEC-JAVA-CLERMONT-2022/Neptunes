@@ -1,6 +1,5 @@
 package io.ipme.neptunes.Model;
 
-
 import javax.persistence.*;
 
 @Entity
@@ -23,6 +22,9 @@ public class Game {
 
     @Column(name = "is_paused")
     private Boolean isPaused;
+
+    @Enumerated(EnumType.STRING)
+    private GameMode mode;
 
     /**
      *getters/setters
@@ -52,4 +54,11 @@ public class Game {
         isPaused = paused;
     }
 
+    public GameMode getMode() {
+        return mode;
+    }
+
+    public void setMode(GameMode mode) {
+        this.mode = mode;
+    }
 }
