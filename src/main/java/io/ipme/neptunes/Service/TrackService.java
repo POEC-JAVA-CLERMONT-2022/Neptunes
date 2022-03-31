@@ -2,11 +2,12 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.TrackRepository;
+import io.ipme.neptunes.Service.dto.TrackDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TrackService {
@@ -14,12 +15,21 @@ public class TrackService {
     @Autowired
     private TrackRepository trackRepository;
 
-    public List<Track> findAll(){
-        return trackRepository.findAll();
+    public List<TrackDTO> findAll(){
+        ArrayList<TrackDTO> playlistDtos = new ArrayList<>();
+        for (Track playlist : trackRepository.findAll()){
+            TrackDTO playlistDto = new TrackDTO();
+            BeanUtils.copyProperties(playlist, playlistDto);
+            playlistDtos.add(playlistDto);
+        }
+        return playlistDtos;
     }
 
-    public Optional<Track> findOne(Integer id){
-        return trackRepository.findById(id);
+    public TrackDTO findOne(Integer id){
+
+        TrackDTO playlistDto = new TrackDTO();
+        BeanUtils.copyProperties(trackRepository.findById(id).orElseThrow(), playlistDto);
+        return playlistDto;
     }
 
     public void save(Track track){

@@ -31,7 +31,7 @@ public class PlaylistService {
     public PlaylistDto findOne(Integer id){
 
         PlaylistDto playlistDto = new PlaylistDto();
-        BeanUtils.copyProperties(playlistRepository.findById(id), playlistDto);
+        BeanUtils.copyProperties(playlistRepository.findById(id).orElseThrow(), playlistDto);
         return playlistDto;
     }
 

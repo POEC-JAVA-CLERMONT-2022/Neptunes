@@ -2,6 +2,7 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Service.TrackService;
+import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class TrackController {
     private TrackService trackService;
 
     @GetMapping("/tracks")
-    public ResponseEntity<List<Track>> getAll(){
+    public ResponseEntity<List<TrackDTO>> getAll(){
         try {
             return ResponseEntity.ok().body(trackService.findAll());
         } catch (Exception e) {
@@ -26,7 +27,7 @@ public class TrackController {
     }
 
     @GetMapping("/tracks/{id}")
-    public ResponseEntity<Optional<Track>> getOne(@PathVariable Integer id){
+    public ResponseEntity<TrackDTO> getOne(@PathVariable Integer id){
         try {
             if (id != null) {
                 return ResponseEntity.ok().body(trackService.findOne(id));
