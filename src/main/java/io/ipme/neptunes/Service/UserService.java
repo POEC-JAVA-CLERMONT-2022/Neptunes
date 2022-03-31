@@ -28,7 +28,7 @@ public class UserService {
 
 	public UserDTO findById(Integer id) {
 		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userRepository.findById(id).orElse(new User("Unknown user")), userDTO);
+		BeanUtils.copyProperties(userRepository.findById(id).orElseThrow(), userDTO);
 		return userDTO;
 	}
 
