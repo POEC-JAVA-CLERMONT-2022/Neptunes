@@ -1,13 +1,12 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.UserGame;
-import io.ipme.neptunes.Model.UserGamePK;
 import io.ipme.neptunes.Repository.UserGameRepository;
+import io.ipme.neptunes.Service.dto.UserGameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.ArrayList;
 
 @Service
 public class UserGameService {
@@ -15,10 +14,11 @@ public class UserGameService {
     @Autowired
     private UserGameRepository userGameRepository;
 
-/*    public List<UserGame> findAll() { return userGameRepository.findAll(); }
-
-    public Optional<UserGame> findById(UserGamePK id) { return userGameRepository.findById(id); }*/
-
-    public List<UserGame> findGameUsersScoreById(Integer id) { return userGameRepository.findByUserGamePK_Game_Id(id); }
-
+    public ArrayList<UserGameDto> findGameUsersScoreById(Integer id) {
+        ArrayList<UserGameDto> userGameDtos = new ArrayList<>();
+        for(UserGame userGame : userGameRepository.findByUserGamePK_Game_Id(id)) {
+            userGameDtos.add(new UserGameDto(userGame.getUserGamePK(), userGame.getScore()));
+        }
+        return userGameDtos;
+    }
 }

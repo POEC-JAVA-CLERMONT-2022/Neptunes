@@ -1,13 +1,13 @@
 package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Game;
-import io.ipme.neptunes.Model.Track;
-import io.ipme.neptunes.Model.UserGame;
 import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
+import io.ipme.neptunes.Service.dto.UserGameDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +41,7 @@ import java.util.Optional;
         }
 
         @GetMapping("/games/{id}/users/scores")
-        public List<UserGame> getUsersAndScores(@PathVariable Integer id) { return userGameService.findGameUsersScoreById(id); }
+        public ArrayList<UserGameDto> getUsersAndScores(@PathVariable Integer id) {
+            return userGameService.findGameUsersScoreById(id);
+        }
 }
