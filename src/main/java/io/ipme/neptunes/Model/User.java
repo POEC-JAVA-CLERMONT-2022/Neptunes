@@ -11,13 +11,13 @@ public class User {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "user_name", length = 255)
+    @Column(name = "user_name")
     private String userName;
 
-    @Column(name = "email", length = 255)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password", length = 255)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "avatar")
@@ -34,6 +34,8 @@ public class User {
     private List<Playlist> playlists;
 
     public User() {}
+
+    public User(String name) { this.userName = name; }
 
     public Integer getId() {
         return id;
