@@ -15,10 +15,5 @@ public class UserGameService {
     @Autowired
     private UserGameRepository userGameRepository;
 
-/*    public List<UserGame> findAll() { return userGameRepository.findAll(); }
-
-    public Optional<UserGame> findById(UserGamePK id) { return userGameRepository.findById(id); }*/
-
     public List<UserGame> findGameUsersScoreById(Integer id) { return userGameRepository.findByUserGamePK_Game_Id(id); }
-
 }
