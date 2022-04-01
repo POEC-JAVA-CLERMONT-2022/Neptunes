@@ -2,13 +2,12 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Service.PlaylistService;
-import io.ipme.neptunes.Service.dto.PlaylistDto;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class PlaylistController {
@@ -17,7 +16,7 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     @GetMapping("/playlists")
-    public ResponseEntity<List<PlaylistDto>> getAll(){
+    public ResponseEntity<List<PlaylistDTO>> getAll(){
 
         try {
             return ResponseEntity.ok().body(playlistService.findAll());
@@ -27,7 +26,7 @@ public class PlaylistController {
     }
 
     @GetMapping("/playlists/{id}")
-    public ResponseEntity<PlaylistDto> getOne(@PathVariable Integer id) {
+    public ResponseEntity<PlaylistDTO> getOne(@PathVariable Integer id) {
 
         try {
             if (id != null) {

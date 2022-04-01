@@ -7,6 +7,7 @@ import io.ipme.neptunes.Repository.GameRepository;
 import io.ipme.neptunes.Repository.UserGameRepository;
 import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
+import io.ipme.neptunes.Service.dto.GameDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,16 @@ class NeptunesApplicationTests {
     @Autowired
     private GameRepository gameRepository;
 
+    //@Autowired
+    //private GameDTO
+
     @Test
     void gameTest(){
         //création d'une game test.
         Game game1 = new Game();
-        game1.setGameUrl("neptunes/game1.com");
+        /*game1.setGameUrl("neptunes/game1.com");
         game1.setMode(GameMode.Normal);
-        game1.setPaused(false);
+        game1.setPaused(false);*/
         gameService.createGame(game1);
         gameRepository.saveAndFlush(game1);
 

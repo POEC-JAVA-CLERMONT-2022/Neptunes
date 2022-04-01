@@ -4,7 +4,7 @@ import io.ipme.neptunes.Model.Track;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaylistDto {
+public class PlaylistDTO {
 
     private Integer id;
 
@@ -12,7 +12,7 @@ public class PlaylistDto {
 
     private Boolean isRandom;
 
-    public PlaylistDto() {
+    public PlaylistDTO() {
         this.tracks = new ArrayList<Track>();
     }
 
