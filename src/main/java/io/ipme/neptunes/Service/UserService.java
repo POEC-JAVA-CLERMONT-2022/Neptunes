@@ -36,14 +36,6 @@ public class UserService {
 
 	public void deleteUser(Integer id) { userRepository.deleteById(id); }
 
-	public void updateUser(User user, Integer id) {
-		User userToUpdate = userRepository.getById(id);
-		userToUpdate.setUserName(user.getUserName());
-		userToUpdate.setPassword(user.getPassword());
-		userToUpdate.setEmail(user.getEmail());
-		userToUpdate.setAvatar(user.getAvatar());
-		userToUpdate.setPremium(user.getPremium());
-		userRepository.save(userToUpdate);
-	}
+	public void updateUser(String userName, String avatar, Integer id ) { userRepository.updateUserInfos(userName, avatar, id); }
 
 }

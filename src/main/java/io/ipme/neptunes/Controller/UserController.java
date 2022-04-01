@@ -8,7 +8,6 @@ import io.ipme.neptunes.Model.User;
 import io.ipme.neptunes.Service.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -29,6 +28,6 @@ public class UserController {
 	public void deleteUser(@PathVariable Integer id) { userService.deleteUser(id); }
 
 	@PatchMapping("/users/{id}")
-	public void updateUser(@RequestBody User user, @PathVariable Integer id) { userService.updateUser(user, id); }
+	public void updateNameUser(@RequestParam String userName, @RequestParam String avatar, @PathVariable Integer id) { userService.updateUser(userName, avatar, id); }
 
 }
