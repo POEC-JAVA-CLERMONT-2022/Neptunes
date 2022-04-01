@@ -2,6 +2,7 @@ package io.ipme.neptunes.Model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -17,12 +18,15 @@ public class Playlist {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
 
+    @NotNull
     @Column(name = "is_random", length = 100)
     private Boolean isRandom;
 
+    @NotNull
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
     private List<Track> tracks;
 
+    @NotNull
     @OneToMany(fetch = FetchType.LAZY)
     private List<Game> games;
 

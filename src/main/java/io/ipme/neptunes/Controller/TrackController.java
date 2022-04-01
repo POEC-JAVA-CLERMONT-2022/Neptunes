@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TrackController {
@@ -27,7 +26,7 @@ public class TrackController {
     }
 
     @GetMapping("/tracks/{id}")
-    public ResponseEntity<TrackDTO> getOne(@PathVariable Integer id){
+    public ResponseEntity<TrackDTO> getOne(@Valid @PathVariable Integer id){
         try {
             if (id != null) {
                 return ResponseEntity.ok().body(trackService.findOne(id));
@@ -52,7 +51,7 @@ public class TrackController {
     }
 
     @DeleteMapping("/tracks/{id}")
-    public ResponseEntity<String> removeTrack(@RequestBody @Valid @PathVariable Integer id) {
+    public ResponseEntity<String> removeTrack(@Valid @RequestBody @PathVariable Integer id) {
         try {
             if (id != null){
                 trackService.remove(id);
@@ -65,7 +64,7 @@ public class TrackController {
     }
 
     @PatchMapping("/tracks/{id}")
-    public ResponseEntity<String> updateTrack(@RequestBody Track track, @Valid @PathVariable Integer id) {
+    public ResponseEntity<String> updateTrack(@Valid @RequestBody Track track, @Valid @PathVariable Integer id) {
         try {
             if (id != null && track != null){
                 trackService.update(track, id);
