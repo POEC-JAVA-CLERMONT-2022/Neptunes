@@ -34,38 +34,23 @@ public class Game {
     private GameMode mode;
 
     /**
-     *getters/setters
+     *getters
      */
 
     public Integer getId() {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getGameUrl() {
         return gameUrl;
-    }
-
-    public void setGameUrl(String gameUrl) {
-        this.gameUrl = gameUrl;
     }
 
     public Boolean getPaused() {
         return isPaused;
     }
 
-    public void setPaused(Boolean paused) {
-        isPaused = paused;
-    }
-
     public GameMode getMode() {
         return mode;
     }
 
-    public void setMode(GameMode mode) {
-        this.mode = mode;
-    }
 }

@@ -3,7 +3,8 @@ package io.ipme.neptunes.Service;
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Repository.PlaylistRepository;
-import io.ipme.neptunes.Service.dto.PlaylistDto;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +19,19 @@ public class PlaylistService {
     @Autowired
     private PlaylistRepository playlistRepository;
 
-    public List<PlaylistDto> findAll(){
-        ArrayList<PlaylistDto> playlistDtos = new ArrayList<>();
+    public List<PlaylistDTO> findAll(){
+        ArrayList<PlaylistDTO> playlistDtos = new ArrayList<>();
         for (Playlist playlist : playlistRepository.findAll()){
-            PlaylistDto playlistDto = new PlaylistDto();
+            PlaylistDTO playlistDto = new PlaylistDTO();
             BeanUtils.copyProperties(playlist, playlistDto);
             playlistDtos.add(playlistDto);
         }
         return playlistDtos;
     }
 
-    public PlaylistDto findOne(Integer id){
+    public PlaylistDTO findOne(Integer id){
 
-        PlaylistDto playlistDto = new PlaylistDto();
+        PlaylistDTO playlistDto = new PlaylistDTO();
         BeanUtils.copyProperties(playlistRepository.findById(id).orElseThrow(), playlistDto);
         return playlistDto;
     }

@@ -3,7 +3,9 @@ package io.ipme.neptunes.Controller;
 import io.ipme.neptunes.Model.Game;
 import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
-import io.ipme.neptunes.Service.dto.UserGameDto;
+import io.ipme.neptunes.Service.dto.GameDTO;
+import io.ipme.neptunes.Service.dto.ThemeDTO;
+import io.ipme.neptunes.Service.dto.UserGameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,9 +23,7 @@ import java.util.Optional;
         private UserGameService userGameService;
 
         @GetMapping("/games")
-        public List<Game> getAll(){
-            return gameService.findAll();
-        }
+        public ArrayList<GameDTO> findAll() { return gameService.findAll(); }
 
         @GetMapping("/games/{id}")
         public Optional<Game> getOne(@PathVariable Integer id){
@@ -41,7 +41,7 @@ import java.util.Optional;
         }
 
         @GetMapping("/games/{id}/users/scores")
-        public ArrayList<UserGameDto> getUsersAndScores(@PathVariable Integer id) {
+        public ArrayList<UserGameDTO> getUsersAndScores(@PathVariable Integer id) {
             return userGameService.findGameUsersScoreById(id);
         }
 }
