@@ -1,12 +1,15 @@
 package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Model.Game;
+import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
 import io.ipme.neptunes.Service.dto.GameDTO;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
 import io.ipme.neptunes.Service.dto.UserGameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,21 +26,53 @@ import java.util.Optional;
         private UserGameService userGameService;
 
         @GetMapping("/games")
-        public ArrayList<GameDTO> findAll() { return gameService.findAll(); }
+        public ResponseEntity<List<GameDTO>> getAll(){
 
-        @GetMapping("/games/{id}")
-        public Optional<Game> getOne(@PathVariable Integer id){
-            return gameService.findOne(id);
+            try {
+                return ResponseEntity.ok().body(gameService.findAll());
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
         }
 
+        @GetMapping("/games/{id}")
+        public ResponseEntity<GameDTO> getOne(@PathVariable Integer id) {
+
+            try {
+                if (id != null) {
+                    return ResponseEntity.ok().body(gameService.findOne(id));
+                }
+                return ResponseEntity.badRequest().build();
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().build();
+            }
+        }
+
+
         @PostMapping("/games")
-        public void createGame(@RequestBody Game game) {
-            gameService.createGame(game);
+        public ResponseEntity<Game> createPlaylist(@RequestBody Game game) {
+
+            try {
+                if (game != null){
+                    gameService.createGame(new GameDTO());
+                }
+                return ResponseEntity.status(201).build();
+            } catch (Exception e) {
+                return ResponseEntity.status(400).build();
+            }
         }
 
         @DeleteMapping("/games/{id}")
-        public void createGame(@RequestBody @PathVariable Integer id) {
-            gameService.deleteGame(id);
+        public ResponseEntity<Playlist> deleteGame(@RequestBody @PathVariable Integer id) {
+
+            try {
+                if (id != null){
+                    gameService.deleteGame(id);
+                }
+                return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                return ResponseEntity.status(400).build();
+            }
         }
 
         @GetMapping("/games/{id}/users/scores")

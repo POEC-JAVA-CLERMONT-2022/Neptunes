@@ -1,10 +1,13 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Game;
+import io.ipme.neptunes.Model.GameMode;
 import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Repository.GameRepository;
 import io.ipme.neptunes.Service.dto.GameDTO;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -27,12 +30,15 @@ import java.util.Optional;
         return gameDTOS;
     }
 
-        public Optional<Game> findOne(Integer id){
-            return gameRepository.findById(id);
-        }
+    public GameDTO findOne(Integer id){
 
-        public void createGame(Game game){
-            gameRepository.saveAndFlush(game);
+        GameDTO gameDTO = new GameDTO();
+        BeanUtils.copyProperties(gameRepository.findById(id).orElseThrow(), gameDTO);
+        return gameDTO;
+    }
+
+        public void createGame(GameDTO gameDTO){
+            gameRepository.saveAndFlush(new Game());
         }
 
         public void deleteGame(Integer id){
