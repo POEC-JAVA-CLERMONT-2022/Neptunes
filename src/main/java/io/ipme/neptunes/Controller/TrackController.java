@@ -11,12 +11,13 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@RequestMapping("tracks")
 public class TrackController {
 
     @Autowired
     private TrackService trackService;
 
-    @GetMapping("/tracks")
+    @GetMapping
     public ResponseEntity<List<TrackDTO>> getAll(){
         try {
             return ResponseEntity.ok().body(trackService.findAll());
@@ -25,7 +26,7 @@ public class TrackController {
         }
     }
 
-    @GetMapping("/tracks/{id}")
+    @GetMapping("{id}")
     public ResponseEntity<TrackDTO> getOne(@Valid @PathVariable Integer id){
         try {
             if (id != null) {
@@ -37,7 +38,7 @@ public class TrackController {
         }
     }
 
-    @PostMapping("/tracks")
+    @PostMapping
     public ResponseEntity<String> createTrack(@RequestBody @Valid Track track) {
         try {
             if (track != null){
@@ -50,7 +51,7 @@ public class TrackController {
         }
     }
 
-    @DeleteMapping("/tracks/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<String> removeTrack(@Valid @RequestBody @PathVariable Integer id) {
         try {
             if (id != null){
@@ -63,7 +64,7 @@ public class TrackController {
         }
     }
 
-    @PatchMapping("/tracks/{id}")
+    @PatchMapping("{id}") // PutMapping
     public ResponseEntity<String> updateTrack(@Valid @RequestBody Track track, @Valid @PathVariable Integer id) {
         try {
             if (id != null && track != null){
@@ -71,6 +72,19 @@ public class TrackController {
                 return ResponseEntity.ok().build();
             }
             return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<String> updateTrack(@RequestBody Integer themeId, @PathVariable Integer id) {
+        try {
+            if ( themeId != null && id != null ) {
+                trackService.setTheme(id, themeId);
+                return ResponseEntity.ok().build();
+            }
+                return  ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

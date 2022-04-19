@@ -1,8 +1,11 @@
 package io.ipme.neptunes.Service;
 
+import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Model.Track;
+import io.ipme.neptunes.Repository.ThemeRepository;
 import io.ipme.neptunes.Repository.TrackRepository;
 import io.ipme.neptunes.Service.dto.TrackDTO;
+import org.hibernate.TypeHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class TrackService {
 
     @Autowired
     private TrackRepository trackRepository;
+
+    @Autowired
+    private ThemeRepository themeRepository;
 
     public List<TrackDTO> findAll(){
         ArrayList<TrackDTO> playlistDtos = new ArrayList<>();
@@ -51,4 +57,11 @@ public class TrackService {
 
         trackRepository.save(trackToUpdate);
     }
+
+    public void setTheme(Integer trackId, Integer themeId) {
+        Track track = trackRepository.findById(trackId).orElseThrow();
+        track.getThemes().add(themeRepository.getById(themeId));
+        trackRepository.saveAndFlush(track);
+    }
+
 }
