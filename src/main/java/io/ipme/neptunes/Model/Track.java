@@ -12,6 +12,7 @@ import java.util.List;
 public class Track {
 
     public Track(){
+
     }
 
     @Id
@@ -42,6 +43,8 @@ public class Track {
 
     @ManyToMany
     private Collection<Playlist> playlist;
+
+    /*getters-setters*/
 
     public void setId(Integer id) {
         this.id = id;

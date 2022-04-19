@@ -18,8 +18,8 @@ public class UserGame {
     private Integer score;
 
     protected UserGame(){
-    }
 
+    }
 
     public UserGamePK getUserGamePK() {
         return userGamePK;

@@ -1,6 +1,5 @@
 package io.ipme.neptunes.Model;
 
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 @Entity
 public class Playlist {
 
-    //Constructor
     public Playlist(){
 
     }
@@ -30,9 +28,7 @@ public class Playlist {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Game> games;
 
-    /**
-     *getters/setters
-     */
+    /*getters-setters*/
 
     public Integer getId() {
         return id;
