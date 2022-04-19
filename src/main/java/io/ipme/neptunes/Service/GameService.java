@@ -1,20 +1,13 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Game;
-import io.ipme.neptunes.Model.GameMode;
-import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Repository.GameRepository;
 import io.ipme.neptunes.Service.dto.GameDTO;
-import io.ipme.neptunes.Service.dto.PlaylistDTO;
-import io.ipme.neptunes.Service.dto.ThemeDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
     public class GameService {
