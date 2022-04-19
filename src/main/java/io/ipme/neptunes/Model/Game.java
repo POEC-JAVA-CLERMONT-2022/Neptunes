@@ -1,17 +1,11 @@
 package io.ipme.neptunes.Model;
 
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Game {
 
-    /**
-     * constructor
-     */
     public Game() {
 
     }
@@ -33,9 +27,7 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private GameMode mode;
 
-    /**
-     *getters
-     */
+    /*getters*/
 
     public Integer getId() {
         return id;

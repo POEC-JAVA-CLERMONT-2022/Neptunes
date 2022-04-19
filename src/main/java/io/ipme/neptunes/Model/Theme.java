@@ -20,7 +20,9 @@ public class Theme {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
     private List<Track> tracks;
 
-    public Theme() {}
+    public Theme() {
+
+    }
 
     public Integer getId() { return id; }
 
