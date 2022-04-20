@@ -52,7 +52,7 @@ import java.util.List;
 
             try {
                 if (game != null){
-                    gameService.createGame(new GameDTO());
+                    gameService.createGame(game);
                 }
                 return ResponseEntity.status(201).build();
             } catch (Exception e) {

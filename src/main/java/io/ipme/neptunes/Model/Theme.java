@@ -30,6 +30,8 @@ public class Theme {
         return theme;
     }
 
+    public List<Track> getTracks() { return tracks; }
+
     public void setTheme(String theme) { this.theme = theme; }
 
     @Override
