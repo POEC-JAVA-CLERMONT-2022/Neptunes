@@ -9,17 +9,13 @@ public class GameDTO {
     private Integer id;
     private String gameUrl;
     private Boolean isPaused;
-    private Enumeration<GameMode> gameModeEnumeration;
+    private GameMode gameMode;
 
-    public GameDTO(Integer id, String gameUrl, Boolean isPaused, Enumeration<GameMode> gameModeEnumeration){
+    public GameDTO(Integer id, String gameUrl, Boolean isPaused, GameMode gameMode){
         this.id = id;
         this.gameUrl = gameUrl;
         this.isPaused = isPaused;
-        this.gameModeEnumeration = gameModeEnumeration;
-    }
-
-    public GameDTO(String gameUrl){
-        this.gameUrl = gameUrl;
+        this.gameMode = gameMode;
     }
 
     public GameDTO(){
@@ -36,19 +32,17 @@ public class GameDTO {
         return isPaused;
     }
 
-    public Enumeration<GameMode> getGameModeEnumeration() {
-        return gameModeEnumeration;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     public void setGameUrl(String gameUrl) {
         this.gameUrl = gameUrl;
     }
 
-    public void setPaused(Boolean paused) {
-        isPaused = paused;
-    }
+    public void setPaused(Boolean paused) {isPaused = paused;}
 
-    public void setGameModeEnumeration(Enumeration<GameMode> gameModeEnumeration) {
-        this.gameModeEnumeration = gameModeEnumeration;
+    public void setGameMode(GameMode gameMode) {
+        this.gameMode = gameMode;
     }
 }
