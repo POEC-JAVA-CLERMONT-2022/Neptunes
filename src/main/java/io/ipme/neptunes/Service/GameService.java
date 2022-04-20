@@ -53,7 +53,7 @@ import java.util.ArrayList;
         gameRepository.save(game);
     }
 
-    public void getGameMode(String gameMode){
+    /*public void getGameMode(String gameMode){
         GameMode.getMode(gameMode);
-    }
+    }*/
 }
