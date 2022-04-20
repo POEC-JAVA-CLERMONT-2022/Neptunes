@@ -92,7 +92,7 @@ public class TrackController {
         }
     }
 
-    @PutMapping("{id}/{themeId}")
+    @DeleteMapping("{id}/themes/{themeId}")
     public ResponseEntity<String> deleteTheme(@PathVariable Integer id, @PathVariable Integer themeId) {
         try {
             if (id != null && themeId != null) {
