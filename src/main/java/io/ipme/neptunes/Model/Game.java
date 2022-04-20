@@ -45,4 +45,9 @@ public class Game {
         return mode;
     }
 
+    /*setter*/
+
+    public void setMode(GameMode mode) {
+        this.mode = mode;
+    }
 }
