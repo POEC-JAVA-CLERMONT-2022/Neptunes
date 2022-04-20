@@ -5,10 +5,10 @@ import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.ThemeRepository;
 import io.ipme.neptunes.Repository.TrackRepository;
 import io.ipme.neptunes.Service.dto.TrackDTO;
-import org.hibernate.TypeHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +58,19 @@ public class TrackService {
         trackRepository.save(trackToUpdate);
     }
 
-    public void setTheme(Integer trackId, Integer themeId) {
+    public void setTheme(Integer trackId, ArrayList<Integer> themeIds) {
         Track track = trackRepository.findById(trackId).orElseThrow();
-        track.getThemes().add(themeRepository.getById(themeId));
+        for (Integer id : themeIds) {
+            Theme theme = themeRepository.findById(id).orElseThrow();
+            theme.getTracks().add(track);
+            track.getThemes().add(theme);
+        }
+        trackRepository.saveAndFlush(track);
+    }
+
+    public void deleteTheme(Integer trackId, Integer themeId) {
+        Track track = trackRepository.findById(trackId).orElseThrow();
+        track.getThemes().remove(themeRepository.findById(themeId).orElseThrow());
         trackRepository.saveAndFlush(track);
     }
 

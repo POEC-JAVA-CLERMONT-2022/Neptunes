@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -78,10 +80,10 @@ public class TrackController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<String> updateTrack(@RequestBody Integer themeId, @PathVariable Integer id) {
+    public ResponseEntity<String> setThemes(@RequestBody ArrayList<Integer> themeIds, @PathVariable Integer id) {
         try {
-            if ( themeId != null && id != null ) {
-                trackService.setTheme(id, themeId);
+            if (themeIds != null && id != null) {
+                trackService.setTheme(id, themeIds);
                 return ResponseEntity.ok().build();
             }
                 return  ResponseEntity.badRequest().build();
@@ -89,4 +91,18 @@ public class TrackController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("{id}/{themeId}")
+    public ResponseEntity<String> deleteTheme(@PathVariable Integer id, @PathVariable Integer themeId) {
+        try {
+            if (id != null && themeId != null) {
+                trackService.deleteTheme(id, themeId);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }
