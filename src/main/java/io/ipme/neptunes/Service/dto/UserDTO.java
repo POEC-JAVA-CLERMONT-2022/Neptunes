@@ -6,6 +6,8 @@ public class UserDTO {
 
     private String avatar;
 
+
+    //TODO: à supprimer
     public UserDTO() {
     }
 

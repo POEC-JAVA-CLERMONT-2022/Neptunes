@@ -45,6 +45,7 @@ public class PlaylistService {
     }
 
     public void update(Playlist playlist, Integer id){
+        //TODO : gestion des exceptions
         Playlist playlistToUpdate  = playlistRepository.getById(id);
         playlistToUpdate.setRandom(playlist.getRandom());
 

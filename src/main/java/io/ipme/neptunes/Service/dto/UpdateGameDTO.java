@@ -31,6 +31,8 @@ public class UpdateGameDTO {
 
     public void setPaused(Boolean paused) { isPaused = paused; }
 
+
+    //TODO à supprimer
     /*
     public GameMode getGameMode() { return gameMode; }
 

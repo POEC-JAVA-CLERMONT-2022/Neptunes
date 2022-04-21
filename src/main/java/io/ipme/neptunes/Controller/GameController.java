@@ -8,6 +8,7 @@ import io.ipme.neptunes.Service.dto.GameDTO;
 import io.ipme.neptunes.Service.dto.UpdateGameDTO;
 import io.ipme.neptunes.Service.dto.UserGameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +24,8 @@ import java.util.List;
 
         @Autowired
         private UserGameService userGameService;
+
+        //TODO: utiliser l'injection via le constructeur
 
         @GetMapping
         public ResponseEntity<List<GameDTO>> getAll(){
@@ -41,8 +44,10 @@ import java.util.List;
                 if (id != null) {
                     return ResponseEntity.ok().body(gameService.findOne(id));
                 }
+                //TODO: mettre du détail
                 return ResponseEntity.badRequest().build();
             } catch (Exception e) {
+                //TODO: mettre du détail
                 return ResponseEntity.badRequest().build();
             }
         }
@@ -55,8 +60,11 @@ import java.util.List;
                 if (game != null){
                     gameService.createGame(new GameDTO());
                 }
+                //TODO: utiliser created
+                //TODO: sinon HttpStatus.CREATED
                 return ResponseEntity.status(201).build();
             } catch (Exception e) {
+                //TODO: HttpStatus.CREATED
                 return ResponseEntity.status(400).build();
             }
         }

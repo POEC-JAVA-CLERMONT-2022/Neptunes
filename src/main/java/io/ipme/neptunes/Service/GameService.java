@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 @Service
+    //TODO : indentation
     public class GameService {
 
     @Autowired
@@ -57,6 +58,7 @@ import java.util.HashSet;
         gameRepository.save(game);
     }
 
+    //TODO: à supprimer
     /*public void getGameMode(String gameMode){
         GameMode.getMode(gameMode);
     }*/
@@ -67,6 +69,7 @@ import java.util.HashSet;
         gameRepository.save(game);
     }
 
+    //TODO : mapstruct
     public static String[] getNullPropertyNames (Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
