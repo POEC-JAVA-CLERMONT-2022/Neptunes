@@ -5,6 +5,7 @@ import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
 import io.ipme.neptunes.Service.dto.GameDTO;
+import io.ipme.neptunes.Service.dto.UpdateGameDTO;
 import io.ipme.neptunes.Service.dto.UserGameDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -90,4 +91,18 @@ import java.util.List;
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
         }
+
+        @PatchMapping("{id}")
+        public ResponseEntity<String> updateGame(@PathVariable Integer id, @RequestBody UpdateGameDTO updateGameDTO) {
+            try {
+                if (id != null && updateGameDTO != null) {
+                    gameService.updateGame(id, updateGameDTO);
+                    return ResponseEntity.ok().build();
+                }
+                return ResponseEntity.badRequest().build();
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+
 }
