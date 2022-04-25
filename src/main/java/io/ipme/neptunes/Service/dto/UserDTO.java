@@ -6,11 +6,6 @@ public class UserDTO {
 
     private String avatar;
 
-
-    //TODO: à supprimer
-    public UserDTO() {
-    }
-
     public String getUserName() { return userName; }
 
     public void setUserName(String userName) { this.userName = userName; }
