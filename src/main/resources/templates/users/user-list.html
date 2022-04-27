@@ -9,13 +9,13 @@
 </head>
 <body>
 
-    <h1>Liste des utilisateurs</h1>
+<h1>Liste des utilisateurs</h1>
 
-    <div class="user" th:each="user : ${users}">
-        <div th:text="${user.userName}"></div>
-    </div>
+<div class="user" th:each="user : ${users}">
+    <div th:text="${user.userName}"></div>
+</div>
 
-    <a href="/">Retour</a>
+<a href="/">Retour</a>
 
 </body>
 </html>

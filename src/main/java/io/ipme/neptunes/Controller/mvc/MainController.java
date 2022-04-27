@@ -9,15 +9,19 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
-    @Autowired
     private UserService userService;
 
-    @GetMapping("/")
+    @Autowired
+    public MainController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
     public ModelAndView index() {
         return new ModelAndView("index");
     }
 
-    @GetMapping("/user-list")
+    @GetMapping("user-list")
     public ModelAndView itemList() {
         ModelAndView mAV = new ModelAndView("users/user-list");
 

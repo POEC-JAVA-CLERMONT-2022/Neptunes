@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 public class Track {
 
-    public Track(){
+    public Track() {
 
     }
 
@@ -94,7 +94,9 @@ public class Track {
         return trackURL;
     }
 
-    public List<Theme> getThemes(){ return themes; }
+    public List<Theme> getThemes() {
+        return themes;
+    }
 
     @Override
     public String toString() {

@@ -11,12 +11,16 @@ import java.util.ArrayList;
 @Service
 public class UserGameService {
 
-    @Autowired
     private UserGameRepository userGameRepository;
+
+    @Autowired
+    public UserGameService(UserGameRepository userGameRepository) {
+        this.userGameRepository = userGameRepository;
+    }
 
     public ArrayList<UserGameDTO> findGameUsersScoreById(Integer id) {
         ArrayList<UserGameDTO> userGameDtos = new ArrayList<>();
-        for(UserGame userGame : userGameRepository.findByUserGamePK_Game_Id(id)) {
+        for (UserGame userGame : userGameRepository.findByUserGamePK_Game_Id(id)) {
             userGameDtos.add(new UserGameDTO(userGame.getUserGamePK(), userGame.getScore()));
         }
         return userGameDtos;

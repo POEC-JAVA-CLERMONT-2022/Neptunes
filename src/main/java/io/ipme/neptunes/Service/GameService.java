@@ -15,11 +15,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 @Service
-    //TODO : indentation
-    public class GameService {
+public class GameService {
+
+    private GameRepository gameRepository;
 
     @Autowired
-    private GameRepository gameRepository;
+    public GameService(GameRepository gameRepository) { this.gameRepository = gameRepository; }
 
     public ArrayList<GameDTO> findAll() {
         ArrayList<GameDTO> gameDTOS = new ArrayList<>();
@@ -30,7 +31,6 @@ import java.util.HashSet;
     }
 
     public GameDTO findOne(Integer id) {
-
         GameDTO gameDTO = new GameDTO();
         BeanUtils.copyProperties(gameRepository.findById(id).orElseThrow(), gameDTO);
         return gameDTO;
@@ -46,22 +46,9 @@ import java.util.HashSet;
 
     public void setGameMode(Integer id, String gameMode) {
         Game game = gameRepository.findById(id).orElseThrow();
-        if(gameMode.equals("Normal")){
-            game.setMode(GameMode.Normal);
-        } else if (gameMode.equals("Faster")){
-            game.setMode(GameMode.Faster);
-        } else if (gameMode.equals("Random")){
-            game.setMode(GameMode.Random);
-        } else {
-            game.setMode(GameMode.Normal);
-        }
+        game.setMode(GameMode.getMode(gameMode));
         gameRepository.save(game);
     }
-
-    //TODO: à supprimer
-    /*public void getGameMode(String gameMode){
-        GameMode.getMode(gameMode);
-    }*/
 
     public void updateGame(Integer id, UpdateGameDTO updateGameDTO) {
         Game game = gameRepository.findById(id).orElseThrow();
@@ -70,12 +57,12 @@ import java.util.HashSet;
     }
 
     //TODO : mapstruct
-    public static String[] getNullPropertyNames (Object source) {
+    public static String[] getNullPropertyNames(Object source) {
         final BeanWrapper src = new BeanWrapperImpl(source);
         java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
 
         HashSet<String> emptyNames = new HashSet<String>();
-        for(java.beans.PropertyDescriptor pd : pds) {
+        for (java.beans.PropertyDescriptor pd : pds) {
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) emptyNames.add(pd.getName());
         }

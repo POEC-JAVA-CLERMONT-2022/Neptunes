@@ -15,15 +15,19 @@ import java.util.List;
 @Service
 public class TrackService {
 
-    @Autowired
     private TrackRepository trackRepository;
 
-    @Autowired
     private ThemeRepository themeRepository;
 
-    public List<TrackDTO> findAll(){
+    @Autowired
+    public TrackService(TrackRepository trackRepository, ThemeRepository themeRepository) {
+        this.trackRepository = trackRepository;
+        this.themeRepository = themeRepository;
+    }
+
+    public List<TrackDTO> findAll() {
         ArrayList<TrackDTO> playlistDtos = new ArrayList<>();
-        for (Track playlist : trackRepository.findAll()){
+        for (Track playlist : trackRepository.findAll()) {
             TrackDTO playlistDto = new TrackDTO();
             BeanUtils.copyProperties(playlist, playlistDto);
             playlistDtos.add(playlistDto);
@@ -31,29 +35,29 @@ public class TrackService {
         return playlistDtos;
     }
 
-    public TrackDTO findOne(Integer id){
+    public TrackDTO findOne(Integer id) {
 
         TrackDTO playlistDto = new TrackDTO();
         BeanUtils.copyProperties(trackRepository.findById(id).orElseThrow(), playlistDto);
         return playlistDto;
     }
 
-    public void save(Track track){
+    public void save(Track track) {
         trackRepository.saveAndFlush(track);
     }
 
-    public void remove(Integer id){
+    public void remove(Integer id) {
         trackRepository.deleteById(id);
     }
 
-    public void update(Track track, Integer id){
+    public void update(Track track, Integer id) {
 
-        Track trackToUpdate  = trackRepository.getById(id);
+        Track trackToUpdate = trackRepository.getById(id);
         trackToUpdate.setTrackName(track.getTrackName().isBlank() ? trackToUpdate.getTrackName() : track.getTrackName());
         trackToUpdate.setTrackAuthor(track.getTrackAuthor().isBlank() ? trackToUpdate.getTrackAuthor() : track.getTrackAuthor());
         trackToUpdate.setTrackURL(track.getTrackURL().isBlank() ? trackToUpdate.getTrackAuthor() : track.getTrackURL());
-        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() ==  null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
-        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() ==  null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
+        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() == null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
+        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() == null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
 
         trackRepository.save(trackToUpdate);
     }

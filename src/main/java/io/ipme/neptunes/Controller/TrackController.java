@@ -4,11 +4,11 @@ import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Service.TrackService;
 import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,64 +17,68 @@ import java.util.List;
 //TODO : utiliser des logger !!!
 public class TrackController {
 
-    @Autowired
     private TrackService trackService;
 
+    @Autowired
+    public TrackController(TrackService trackService) {
+        this.trackService = trackService;
+    }
+
     @GetMapping
-    public ResponseEntity<List<TrackDTO>> getAll(){
+    public ResponseEntity<List<TrackDTO>> getAll() {
         try {
             return ResponseEntity.ok().body(trackService.findAll());
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<TrackDTO> getOne(@Valid @PathVariable Integer id){
+    public ResponseEntity<TrackDTO> getOne(@Valid @PathVariable Integer id) {
         try {
             if (id != null) {
                 return ResponseEntity.ok().body(trackService.findOne(id));
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<String> createTrack(@RequestBody @Valid Track track) {
+    public ResponseEntity createTrack(@RequestBody @Valid Track track) {
         try {
-            if (track != null){
+            if (track != null) {
                 trackService.save(track);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(HttpStatus.CREATED);
             }
-            return ResponseEntity.badRequest().build();
-        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> removeTrack(@Valid @RequestBody @PathVariable Integer id) {
+    public ResponseEntity<String> removeTrack(@Valid @PathVariable Integer id) {
         try {
-            if (id != null){
+            if (id != null) {
                 trackService.remove(id);
                 return ResponseEntity.ok().build();
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @PatchMapping("{id}") // PutMapping
+    @PatchMapping("{id}")
     public ResponseEntity<String> updateTrack(@Valid @RequestBody Track track, @Valid @PathVariable Integer id) {
         try {
-            if (id != null && track != null){
+            if (id != null && track != null) {
                 trackService.update(track, id);
                 return ResponseEntity.ok().build();
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -87,7 +91,7 @@ public class TrackController {
                 trackService.setTheme(id, themeIds);
                 return ResponseEntity.ok().build();
             }
-                return  ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -10,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID")
     private Integer id;
 
     @NotBlank
@@ -30,21 +30,22 @@ public class User {
     private String avatar;
 
     @NotNull
-    @Column(name = "is_Premium", nullable = false)
+    @Column(name = "is_Premium")
     private Boolean isPremium;
-
-    public List<Playlist> getPlaylists() {
-        return playlists;
-    }
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
     public User() {
-
     }
 
-    public User(String name) { this.userName = name; }
+    public User(String userName, String email, String password, String avatar, Boolean isPremium) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.avatar = avatar;
+        this.isPremium = isPremium;
+    }
 
     public Integer getId() {
         return id;
@@ -68,5 +69,29 @@ public class User {
 
     public Boolean getPremium() {
         return isPremium;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
     }
 }

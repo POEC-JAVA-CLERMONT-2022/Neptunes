@@ -24,15 +24,21 @@ public class Theme {
 
     }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
     public String getTheme() {
         return theme;
     }
 
-    public List<Track> getTracks() { return tracks; }
+    public List<Track> getTracks() {
+        return tracks;
+    }
 
-    public void setTheme(String theme) { this.theme = theme; }
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
     @Override
     public String toString() {
