@@ -3,7 +3,6 @@ package io.ipme.neptunes.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Theme {
@@ -40,25 +39,4 @@ public class Theme {
         this.theme = theme;
     }
 
-    @Override
-    public String toString() {
-        return "Theme{" +
-                "id=" + id +
-                ", theme='" + theme + '\'' +
-                ", tracks=" + tracks +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Theme theme1 = (Theme) o;
-        return id.equals(theme1.id) && theme.equals(theme1.theme) && tracks.equals(theme1.tracks);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, theme, tracks);
-    }
 }

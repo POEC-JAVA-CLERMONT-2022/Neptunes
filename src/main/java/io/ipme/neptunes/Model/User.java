@@ -8,6 +8,9 @@ import java.util.List;
 @Entity
 public class User {
 
+    /*
+        Attributes
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
@@ -36,6 +39,10 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY)
     private List<Playlist> playlists;
 
+    /*
+        Constructors
+        Note : Le constructeur est nécessaire ! Ne pas supprimer !
+     */
     public User() {
     }
 
@@ -47,6 +54,9 @@ public class User {
         this.isPremium = isPremium;
     }
 
+    /*
+        Getters
+     */
     public Integer getId() {
         return id;
     }
@@ -71,10 +81,9 @@ public class User {
         return isPremium;
     }
 
-    public List<Playlist> getPlaylists() {
-        return playlists;
-    }
-
+    /*
+        Setters
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }

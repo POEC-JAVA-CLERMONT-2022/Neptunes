@@ -37,10 +37,11 @@ public class UserService {
         return userDTO;
     }
 
-    /* TODO : Changer User en userDTO */
-    public User createUser(UserCreateUpdateDTO userCreateDTO) {
-        User user = new User(userCreateDTO.getUserName(), userCreateDTO.getEmail(), userCreateDTO.getPassword(), userCreateDTO.getAvatar(), userCreateDTO.getPremium());
-        return userRepository.save(user);
+    public UserDTO createUser(UserCreateUpdateDTO userCreateDTO) {
+        User user = userRepository.save(new User(userCreateDTO.getUserName(), userCreateDTO.getEmail(), userCreateDTO.getPassword(), userCreateDTO.getAvatar(), userCreateDTO.getPremium()));
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        return userDTO;
     }
 
     public void deleteUser(Integer id) {
@@ -48,7 +49,8 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(Integer id, UserCreateUpdateDTO userUpdateDTO) {
+    public UserDTO updateUser(Integer id, UserCreateUpdateDTO userUpdateDTO) {
+        // Update de l'user existant
         User user = userRepository.findById(id).orElseThrow();
 
         if (userUpdateDTO.getUserName() != null) user.setUserName(userUpdateDTO.getUserName());
@@ -58,6 +60,11 @@ public class UserService {
         if (userUpdateDTO.getPremium() != null) user.setPremium(userUpdateDTO.getPremium());
 
         userRepository.save(user);
+
+        // Renvoi du DTO
+        UserDTO userDTO = new UserDTO();
+        BeanUtils.copyProperties(user, userDTO);
+        return userDTO;
     }
 
 }

@@ -7,8 +7,6 @@ import java.util.List;
 
 public class PlaylistDTO {
 
-    private Integer id;
-
     private List<Track> tracks;
 
     private Boolean isRandom;
@@ -17,20 +15,12 @@ public class PlaylistDTO {
         this.tracks = new ArrayList<Track>();
     }
 
-    public Integer getId() {
-        return id;
-    }
-
     public List<Track> getTracks() {
         return tracks;
     }
 
     public Boolean getRandom() {
         return isRandom;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public void setTracks(List<Track> tracks) {

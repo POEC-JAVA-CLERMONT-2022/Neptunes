@@ -36,8 +36,10 @@ public class GameService {
         return gameDTO;
     }
 
-    public void createGame(GameDTO gameDTO) {
-        gameRepository.saveAndFlush(new Game());
+    public GameDTO createGame(GameDTO gameDTO) {
+        Game game = new Game(gameDTO.getGameUrl(), gameDTO.getPaused(), gameDTO.getGameMode());
+        gameRepository.save(game);
+        return gameDTO;
     }
 
     public void deleteGame(Integer id) {

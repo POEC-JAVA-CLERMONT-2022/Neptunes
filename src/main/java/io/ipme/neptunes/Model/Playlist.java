@@ -58,22 +58,4 @@ public class Playlist {
         this.games = games;
     }
 
-    @Override
-    public String toString() {
-        return "Playlist{" +
-                "id=" + id +
-                ", isRandom=" + isRandom +
-                ", tracks=" + tracks +
-                ", games=" + games +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (isRandom != null ? isRandom.hashCode() : 0);
-        result = 31 * result + (tracks != null ? tracks.hashCode() : 0);
-        result = 31 * result + (games != null ? games.hashCode() : 0);
-        return result;
-    }
 }

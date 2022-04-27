@@ -98,28 +98,4 @@ public class Track {
         return themes;
     }
 
-    @Override
-    public String toString() {
-        return "Track{" +
-                "id=" + id +
-                ", trackName='" + trackName + '\'' +
-                ", trackAuthor='" + trackAuthor + '\'' +
-                ", trackReleaseYear=" + trackReleaseYear +
-                ", trackURL='" + trackURL + '\'' +
-                ", themes=" + themes +
-                ", playlist=" + playlist +
-                '}';
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (trackName != null ? trackName.hashCode() : 0);
-        result = 31 * result + (trackAuthor != null ? trackAuthor.hashCode() : 0);
-        result = 31 * result + (trackReleaseYear != null ? trackReleaseYear.hashCode() : 0);
-        result = 31 * result + (trackURL != null ? trackURL.hashCode() : 0);
-        result = 31 * result + (themes != null ? themes.hashCode() : 0);
-        result = 31 * result + (playlist != null ? playlist.hashCode() : 0);
-        return result;
-    }
 }
