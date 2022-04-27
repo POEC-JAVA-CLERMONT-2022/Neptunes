@@ -4,10 +4,10 @@ import javax.persistence.*;
 
 @Entity
 @AssociationOverrides(
-    {
-        @AssociationOverride(name = "usergame.game", joinColumns = @JoinColumn(name = "game_id")),
-        @AssociationOverride(name = "usergame.user", joinColumns = @JoinColumn(name = "user_id")),
-    }
+        {
+                @AssociationOverride(name = "usergame.game", joinColumns = @JoinColumn(name = "game_id")),
+                @AssociationOverride(name = "usergame.user", joinColumns = @JoinColumn(name = "user_id")),
+        }
 )
 public class UserGame {
 
@@ -17,7 +17,7 @@ public class UserGame {
     @Column(name = "score")
     private Integer score;
 
-    protected UserGame(){
+    protected UserGame() {
 
     }
 

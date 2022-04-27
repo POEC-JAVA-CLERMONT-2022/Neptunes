@@ -13,7 +13,7 @@ public class UserGamePK implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Game game;
 
-    protected UserGamePK(){
+    protected UserGamePK() {
     }
 
     public User getUser() {

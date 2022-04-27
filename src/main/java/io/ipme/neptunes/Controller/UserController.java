@@ -1,5 +1,6 @@
 package io.ipme.neptunes.Controller;
 
+import io.ipme.neptunes.Model.User;
 import io.ipme.neptunes.Service.UserService;
 import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.UserDTO;
@@ -16,66 +17,68 @@ public class UserController {
 
     private UserService userService;
 
-	@Autowired
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
-	
-	@GetMapping
-	public ResponseEntity<List<UserDTO>> findAll() {
-		try {
-			return ResponseEntity.ok().body(userService.findAll());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-	}
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-	@GetMapping("{id}")
-	public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
-		try {
-			return ResponseEntity.ok(userService.findById(id));
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-	}
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> findAll() {
+        try {
+            return ResponseEntity.ok().body(userService.findAll());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
-	@PostMapping
-	public ResponseEntity createUser(@RequestBody UserCreateUpdateDTO userCreateDTO) {
-		try {
-			if (userCreateDTO != null) {
-				userService.createUser(userCreateDTO);
-				return ResponseEntity.ok(HttpStatus.CREATED);
-			}
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
+    @GetMapping("{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
+        try {
+            return ResponseEntity.ok(userService.findById(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
-	@DeleteMapping("{id}")
-	public ResponseEntity deleteUser(@PathVariable Integer id) {
-		try {
-			if (id != null) {
-				userService.deleteUser(id);
-				return ResponseEntity.ok().build();
-			}
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
+    @PostMapping
+    public ResponseEntity<?> createUser(@RequestBody UserCreateUpdateDTO userCreateDTO) {
+        try {
+            if (userCreateDTO != null) {
+                User user = userService.createUser(userCreateDTO);
+                return ResponseEntity.status(HttpStatus.CREATED).body(user);
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
-	@PatchMapping("{id}")
-	public ResponseEntity updateUser(@PathVariable Integer id, @RequestBody UserCreateUpdateDTO userUpdateDTO) {
-		try {
-			if (userUpdateDTO != null) {
-				userService.updateUser(id, userUpdateDTO);
-				return ResponseEntity.ok().build();
-			}
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-	}
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                userService.deleteUser(id);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserCreateUpdateDTO userUpdateDTO) {
+        try {
+            if (userUpdateDTO != null) {
+                userService.updateUser(id, userUpdateDTO);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // TODO : faire une route de get playlist ("users/{id}/playlists")
 
 }

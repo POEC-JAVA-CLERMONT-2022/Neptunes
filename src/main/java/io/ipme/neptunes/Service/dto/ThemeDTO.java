@@ -10,15 +10,23 @@ public class ThemeDTO {
 
     private List<Track> tracks;
 
-    public ThemeDTO(String theme){
+    public ThemeDTO(String theme) {
         this.theme = theme;
     }
 
-    public String getTheme() { return theme; }
+    public String getTheme() {
+        return theme;
+    }
 
-    public List<Track> getTracks() { return tracks; }
+    public List<Track> getTracks() {
+        return tracks;
+    }
 
-    public void setTheme(String theme) { this.theme = theme; }
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
-    public void setTracks(List<Track> tracks) { this.tracks = tracks; }
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
 }

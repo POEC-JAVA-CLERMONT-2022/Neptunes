@@ -75,4 +75,23 @@ public class User {
         return playlists;
     }
 
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public void setPremium(Boolean premium) {
+        isPremium = premium;
+    }
 }

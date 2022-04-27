@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class Playlist {
 
-    public Playlist(){
+    public Playlist() {
 
     }
 

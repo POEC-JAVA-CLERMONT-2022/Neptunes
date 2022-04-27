@@ -23,13 +23,21 @@ public class UpdateGameDTO {
     public UpdateGameDTO() {
     }
 
-    public String getGameUrl() { return gameUrl; }
+    public String getGameUrl() {
+        return gameUrl;
+    }
 
-    public void setGameUrl(String gameUrl) { this.gameUrl = gameUrl; }
+    public void setGameUrl(String gameUrl) {
+        this.gameUrl = gameUrl;
+    }
 
-    public Boolean getPaused() { return isPaused; }
+    public Boolean getPaused() {
+        return isPaused;
+    }
 
-    public void setPaused(Boolean paused) { isPaused = paused; }
+    public void setPaused(Boolean paused) {
+        isPaused = paused;
+    }
 
 
     //TODO à supprimer
