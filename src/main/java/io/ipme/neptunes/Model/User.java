@@ -20,6 +20,7 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
+    // TODO : rendre unique
     @NotBlank
     @Column(name = "email")
     private String email;
@@ -81,9 +82,11 @@ public class User {
         return isPremium;
     }
 
+    public List<Playlist> getPlaylists() { return playlists; }
+
     /*
-        Setters
-     */
+            Setters
+         */
     public void setUserName(String userName) {
         this.userName = userName;
     }

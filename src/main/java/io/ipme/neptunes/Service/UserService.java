@@ -1,7 +1,9 @@
 package io.ipme.neptunes.Service;
 
+import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Model.User;
 import io.ipme.neptunes.Repository.UserRepository;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
@@ -65,6 +67,18 @@ public class UserService {
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;
+    }
+
+    public List<PlaylistDTO> getUserPlaylists(Integer id) {
+        List<PlaylistDTO> playlistDTOS = new ArrayList<>();
+        User user = userRepository.findById(id).orElseThrow();
+        for (Playlist playlist :
+                user.getPlaylists()) {
+            PlaylistDTO playlistDTO = new PlaylistDTO();
+            BeanUtils.copyProperties(playlist, playlistDTO);
+            playlistDTOS.add(playlistDTO);
+        }
+        return playlistDTOS;
     }
 
 }
