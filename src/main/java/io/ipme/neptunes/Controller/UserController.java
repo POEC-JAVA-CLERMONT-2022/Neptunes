@@ -1,7 +1,8 @@
 package io.ipme.neptunes.Controller;
 
-import io.ipme.neptunes.Model.User;
+import io.ipme.neptunes.Service.PlaylistService;
 import io.ipme.neptunes.Service.UserService;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,12 @@ import java.util.List;
 public class UserController {
 
     private UserService userService;
+    private PlaylistService playlistService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PlaylistService playlistService) {
         this.userService = userService;
+        this.playlistService = playlistService;
     }
 
     @GetMapping
@@ -34,7 +37,10 @@ public class UserController {
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(userService.findById(id));
+            if (id != null) {
+                return ResponseEntity.ok(userService.findById(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
@@ -44,8 +50,8 @@ public class UserController {
     public ResponseEntity<?> createUser(@RequestBody UserCreateUpdateDTO userCreateDTO) {
         try {
             if (userCreateDTO != null) {
-                User user = userService.createUser(userCreateDTO);
-                return ResponseEntity.status(HttpStatus.CREATED).body(user);
+                UserDTO userDTO = userService.createUser(userCreateDTO);
+                return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
@@ -67,11 +73,11 @@ public class UserController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody UserCreateUpdateDTO userUpdateDTO) {
+    public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserCreateUpdateDTO userUpdateDTO) {
         try {
             if (userUpdateDTO != null) {
-                userService.updateUser(id, userUpdateDTO);
-                return ResponseEntity.ok().build();
+                UserDTO userDTO = userService.updateUser(id, userUpdateDTO);
+                return ResponseEntity.ok().body(userDTO);
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
@@ -79,6 +85,16 @@ public class UserController {
         }
     }
 
-    // TODO : faire une route de get playlist ("users/{id}/playlists")
+    @GetMapping("{id}/playlists")
+    public ResponseEntity<List<PlaylistDTO>> getUserPlaylists(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                return ResponseEntity.ok(userService.getUserPlaylists(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 
 }

@@ -4,23 +4,17 @@ import io.ipme.neptunes.Model.GameMode;
 
 public class GameDTO {
 
-    private Integer id;
     private String gameUrl;
     private Boolean isPaused;
     private GameMode gameMode;
 
     public GameDTO(Integer id, String gameUrl, Boolean isPaused, GameMode gameMode) {
-        this.id = id;
         this.gameUrl = gameUrl;
         this.isPaused = isPaused;
         this.gameMode = gameMode;
     }
 
     public GameDTO() {
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getGameUrl() {

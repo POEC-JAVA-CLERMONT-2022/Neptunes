@@ -6,9 +6,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Game {
 
-    public Game() {
-
-    }
+    /*Attributes*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +24,14 @@ public class Game {
     @NotNull
     @Enumerated(EnumType.STRING)
     private GameMode mode;
+
+    /*Constructors*/
+
+    public Game(String gameUrl, Boolean isPaused, GameMode mode) {
+        this.gameUrl = gameUrl;
+        this.isPaused = isPaused;
+        this.mode = mode;
+    }
 
     /*getters*/
 
