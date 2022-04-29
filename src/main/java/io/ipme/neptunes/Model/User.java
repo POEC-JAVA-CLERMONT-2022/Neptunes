@@ -1,6 +1,7 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -20,9 +21,9 @@ public class User {
     @Column(name = "user_name")
     private String userName;
 
-    // TODO : rendre unique
     @NotBlank
-    @Column(name = "email")
+    @Email
+    @Column(name = "email", unique = true)
     private String email;
 
     @NotBlank

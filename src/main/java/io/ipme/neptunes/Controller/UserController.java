@@ -29,7 +29,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
         try {
-            return ResponseEntity.ok().body(userService.findAll());
+            return ResponseEntity.ok(userService.findAll());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }

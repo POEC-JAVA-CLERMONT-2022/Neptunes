@@ -8,6 +8,8 @@ public class UserDTO {
 
     private String avatar;
 
+    private Boolean isPremium;
+
     public Integer getId() { return id; }
 
     public void setId(Integer id) { this.id = id; }
@@ -23,5 +25,9 @@ public class UserDTO {
     }
 
     public void setAvatar(String avatar) { this.avatar = avatar; }
+
+    public Boolean getPremium() { return isPremium; }
+
+    public void setPremium(Boolean premium) { isPremium = premium; }
 
 }
