@@ -11,10 +11,7 @@ import java.util.List;
 @Entity
 public class Track {
 
-    public Track() {
-
-    }
-
+    /*attributes*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
@@ -44,11 +41,19 @@ public class Track {
     @ManyToMany
     private Collection<Playlist> playlist;
 
-    /*getters-setters*/
+    /*Constructors*/
 
-    public void setId(Integer id) {
-        this.id = id;
+    public Track() {
     }
+
+    public Track(String trackName, String trackAuthor, Integer trackReleaseYear, String trackURL) {
+        this.trackName = trackName;
+        this.trackAuthor = trackAuthor;
+        this.trackReleaseYear = trackReleaseYear;
+        this.trackURL = trackURL;
+    }
+
+    /*getters-setters*/
 
     public void setTrackName(String trackName) {
         this.trackName = trackName;
@@ -64,14 +69,6 @@ public class Track {
 
     public void setTrackURL(String trackURL) {
         this.trackURL = trackURL;
-    }
-
-    public void setThemes(List<Theme> themes) {
-        this.themes = themes;
-    }
-
-    public void setPlaylist(Collection<Playlist> playlist) {
-        this.playlist = playlist;
     }
 
     public Integer getId() {

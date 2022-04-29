@@ -7,6 +7,9 @@ import java.util.List;
 @Entity
 public class Theme {
 
+    /*
+        Attributes
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true, nullable = false)
@@ -19,10 +22,20 @@ public class Theme {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
     private List<Track> tracks;
 
+    /*
+        Constructors
+     */
     public Theme() {
 
     }
 
+    public Theme(String theme) {
+        this.theme = theme;
+    }
+
+    /*
+        Getters - Setters
+     */
     public Integer getId() {
         return id;
     }

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("users")
+// TODO : throw(new Exception) / Classe Exception personnalisable
 public class UserController {
 
     private UserService userService;

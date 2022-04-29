@@ -26,24 +26,25 @@ public class TrackService {
     }
 
     public List<TrackDTO> findAll() {
-        ArrayList<TrackDTO> playlistDtos = new ArrayList<>();
-        for (Track playlist : trackRepository.findAll()) {
-            TrackDTO playlistDto = new TrackDTO();
-            BeanUtils.copyProperties(playlist, playlistDto);
-            playlistDtos.add(playlistDto);
+        List<TrackDTO> trackDTOS = new ArrayList<>();
+        for (Track track : trackRepository.findAll()) {
+            TrackDTO trackDTO = new TrackDTO();
+            BeanUtils.copyProperties(track, trackDTO);
+            trackDTOS.add(trackDTO);
         }
-        return playlistDtos;
+        return trackDTOS;
     }
 
     public TrackDTO findOne(Integer id) {
-
-        TrackDTO playlistDto = new TrackDTO();
-        BeanUtils.copyProperties(trackRepository.findById(id).orElseThrow(), playlistDto);
-        return playlistDto;
+        TrackDTO trackDTO = new TrackDTO();
+        BeanUtils.copyProperties(trackRepository.findById(id).orElseThrow(), trackDTO);
+        return trackDTO;
     }
 
-    public void save(Track track) {
-        trackRepository.saveAndFlush(track);
+    public TrackDTO save(TrackDTO trackDTO) {
+        Track track = new Track(trackDTO.getTrackName(), trackDTO.getTrackAuthor(), trackDTO.getTrackReleaseYear(), trackDTO.getTrackURL());
+        trackRepository.save(track);
+        return trackDTO;
     }
 
     public void remove(Integer id) {

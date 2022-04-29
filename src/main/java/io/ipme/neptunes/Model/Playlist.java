@@ -17,6 +17,10 @@ public class Playlist {
     private Integer id;
 
     @NotNull
+    @Column(name = "name")
+    private String name;
+
+    @NotNull
     @Column(name = "is_random", length = 100)
     private Boolean isRandom;
 
@@ -34,8 +38,12 @@ public class Playlist {
         return id;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getRandom() {
