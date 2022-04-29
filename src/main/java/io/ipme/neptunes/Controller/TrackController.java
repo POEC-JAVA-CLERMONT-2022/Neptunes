@@ -27,17 +27,17 @@ public class TrackController {
     @GetMapping
     public ResponseEntity<List<TrackDTO>> getAll() {
         try {
-            return ResponseEntity.ok().body(trackService.findAll());
+            return ResponseEntity.ok(trackService.findAll());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<TrackDTO> getOne(@Valid @PathVariable Integer id) {
+    public ResponseEntity<TrackDTO> getOne(@PathVariable Integer id) {
         try {
             if (id != null) {
-                return ResponseEntity.ok().body(trackService.findOne(id));
+                return ResponseEntity.ok(trackService.findOne(id));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
@@ -46,11 +46,10 @@ public class TrackController {
     }
 
     @PostMapping
-    public ResponseEntity createTrack(@RequestBody @Valid Track track) {
+    public ResponseEntity<?> createTrack(@RequestBody TrackDTO trackDTO) {
         try {
-            if (track != null) {
-                trackService.save(track);
-                return ResponseEntity.ok(HttpStatus.CREATED);
+            if (trackDTO != null) {
+                return ResponseEntity.ok(trackService.save(trackDTO));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

@@ -2,18 +2,17 @@ package io.ipme.neptunes.Service.dto;
 
 import io.ipme.neptunes.Model.Track;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PlaylistDTO {
+
+    private String name;
 
     private List<Track> tracks;
 
     private Boolean isRandom;
 
-    public PlaylistDTO() {
-        this.tracks = new ArrayList<Track>();
-    }
+    public String getName() { return name; }
 
     public List<Track> getTracks() {
         return tracks;
@@ -22,6 +21,8 @@ public class PlaylistDTO {
     public Boolean getRandom() {
         return isRandom;
     }
+
+    public void setName(String name) { this.name = name; }
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;

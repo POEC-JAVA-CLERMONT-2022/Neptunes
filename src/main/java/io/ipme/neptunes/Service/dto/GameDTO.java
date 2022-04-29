@@ -8,22 +8,11 @@ public class GameDTO {
     private Boolean isPaused;
     private GameMode gameMode;
 
-    public GameDTO(Integer id, String gameUrl, Boolean isPaused, GameMode gameMode) {
-        this.gameUrl = gameUrl;
-        this.isPaused = isPaused;
-        this.gameMode = gameMode;
-    }
-
-    public GameDTO() {
-    }
-
     public String getGameUrl() {
         return gameUrl;
     }
 
-    public Boolean getPaused() {
-        return isPaused;
-    }
+    public Boolean getPaused() { return isPaused; }
 
     public GameMode getGameMode() {
         return gameMode;

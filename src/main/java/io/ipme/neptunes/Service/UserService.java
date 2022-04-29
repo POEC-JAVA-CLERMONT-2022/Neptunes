@@ -72,8 +72,7 @@ public class UserService {
     public List<PlaylistDTO> getUserPlaylists(Integer id) {
         List<PlaylistDTO> playlistDTOS = new ArrayList<>();
         User user = userRepository.findById(id).orElseThrow();
-        for (Playlist playlist :
-                user.getPlaylists()) {
+        for (Playlist playlist : user.getPlaylists()) {
             PlaylistDTO playlistDTO = new PlaylistDTO();
             BeanUtils.copyProperties(playlist, playlistDTO);
             playlistDTOS.add(playlistDTO);

@@ -3,16 +3,13 @@ package io.ipme.neptunes.Service;
 import io.ipme.neptunes.Model.Game;
 import io.ipme.neptunes.Repository.GameRepository;
 import io.ipme.neptunes.Service.dto.GameDTO;
-import io.ipme.neptunes.Service.dto.UpdateGameDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.ipme.neptunes.Model.GameMode;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class GameService {
@@ -22,10 +19,12 @@ public class GameService {
     @Autowired
     public GameService(GameRepository gameRepository) { this.gameRepository = gameRepository; }
 
-    public ArrayList<GameDTO> findAll() {
-        ArrayList<GameDTO> gameDTOS = new ArrayList<>();
+    public List<GameDTO> findAll() {
+        List<GameDTO> gameDTOS = new ArrayList<>();
         for (Game game : gameRepository.findAll()) {
-            gameDTOS.add(new GameDTO(game.getId(), game.getGameUrl(), game.getPaused(), game.getMode()));
+            GameDTO gameDTO = new GameDTO();
+            BeanUtils.copyProperties(game, gameDTO);
+            gameDTOS.add(gameDTO);
         }
         return gameDTOS;
     }
@@ -43,33 +42,34 @@ public class GameService {
     }
 
     public void deleteGame(Integer id) {
+        // TODO : la suppression doit également supprimer les scores liés et couper l'association avec sa playlist
         gameRepository.deleteById(id);
     }
 
-    public void setGameMode(Integer id, String gameMode) {
+    // TODO : Mapstruct
+    public GameDTO updateGame(Integer id, GameDTO gameDTO) {
+        // Game update
         Game game = gameRepository.findById(id).orElseThrow();
-        game.setMode(GameMode.getMode(gameMode));
+
+        if (gameDTO.getGameUrl() != null) game.setGameUrl(gameDTO.getGameUrl());
+        if (gameDTO.getPaused() != null) game.setPaused(gameDTO.getPaused());
+        if (gameDTO.getGameMode() != null) game.setGameMode(gameDTO.getGameMode());
+
         gameRepository.save(game);
+
+        // GameDTO send back
+        GameDTO gameDTOToReturn = new GameDTO();
+        BeanUtils.copyProperties(game, gameDTOToReturn);
+        return gameDTOToReturn;
     }
 
-    public void updateGame(Integer id, UpdateGameDTO updateGameDTO) {
+    public GameDTO setGameMode(Integer id, String gameMode) {
         Game game = gameRepository.findById(id).orElseThrow();
-        BeanUtils.copyProperties(updateGameDTO, game, getNullPropertyNames(updateGameDTO));
+        game.setGameMode(GameMode.getMode(gameMode));
         gameRepository.save(game);
+        GameDTO gameDTO = new GameDTO();
+        BeanUtils.copyProperties(game, gameDTO);
+        return gameDTO;
     }
 
-    //TODO : mapstruct
-    public static String[] getNullPropertyNames(Object source) {
-        final BeanWrapper src = new BeanWrapperImpl(source);
-        java.beans.PropertyDescriptor[] pds = src.getPropertyDescriptors();
-
-        HashSet<String> emptyNames = new HashSet<String>();
-        for (java.beans.PropertyDescriptor pd : pds) {
-            Object srcValue = src.getPropertyValue(pd.getName());
-            if (srcValue == null) emptyNames.add(pd.getName());
-        }
-
-        String[] result = new String[emptyNames.size()];
-        return emptyNames.toArray(result);
-    }
 }

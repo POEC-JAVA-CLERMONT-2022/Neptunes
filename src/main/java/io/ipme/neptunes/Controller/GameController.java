@@ -19,12 +19,9 @@ public class GameController {
 
     private GameService gameService;
 
-    private UserGameService userGameService;
-
     @Autowired
     public GameController(GameService gameService, UserGameService userGameService) {
         this.gameService = gameService;
-        this.userGameService = userGameService;
     }
 
     @GetMapping
@@ -79,17 +76,11 @@ public class GameController {
         }
     }
 
-    @GetMapping("{id}/users/scores")
-    public ArrayList<UserGameDTO> getUsersAndScores(@PathVariable Integer id) {
-        return userGameService.findGameUsersScoreById(id);
-    }
-
     @PutMapping("{id}")
-    public ResponseEntity<String> updateGameMode(@RequestBody String gameModeName, @PathVariable Integer id) {
+    public ResponseEntity<?> updateGameMode(@RequestBody String gameModeName, @PathVariable Integer id) {
         try {
             if (gameModeName != null && id != null) {
-                gameService.setGameMode(id, gameModeName);
-                return ResponseEntity.ok().build();
+                return ResponseEntity.ok(gameService.setGameMode(id, gameModeName));
             }
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
@@ -98,13 +89,12 @@ public class GameController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<String> updateGame(@PathVariable Integer id, @RequestBody UpdateGameDTO updateGameDTO) {
+    public ResponseEntity<?> updateGame(@PathVariable Integer id, @RequestBody GameDTO gameDTO) {
         try {
-            if (id != null && updateGameDTO != null) {
-                gameService.updateGame(id, updateGameDTO);
-                return ResponseEntity.ok().build();
+            if (id != null && gameDTO != null) {
+                return ResponseEntity.ok(gameService.updateGame(id, gameDTO));
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -22,15 +22,19 @@ public class Game {
     private Boolean isPaused;
 
     @NotNull
+    @Column(name = "mode")
     @Enumerated(EnumType.STRING)
-    private GameMode mode;
+    private GameMode gameMode;
 
     /*Constructors*/
 
-    public Game(String gameUrl, Boolean isPaused, GameMode mode) {
+    public Game() {
+    }
+
+    public Game(String gameUrl, Boolean isPaused, GameMode gameMode) {
         this.gameUrl = gameUrl;
         this.isPaused = isPaused;
-        this.mode = mode;
+        this.gameMode = gameMode;
     }
 
     /*getters*/
@@ -47,13 +51,16 @@ public class Game {
         return isPaused;
     }
 
-    public GameMode getMode() {
-        return mode;
+    public GameMode getGameMode() {
+        return gameMode;
     }
 
     /*setter*/
 
-    public void setMode(GameMode mode) {
-        this.mode = mode;
-    }
+    public void setGameMode(GameMode gameMode) { this.gameMode = gameMode; }
+
+    public void setGameUrl(String gameUrl) { this.gameUrl = gameUrl; }
+
+    public void setPaused(Boolean paused) { isPaused = paused; }
+
 }
