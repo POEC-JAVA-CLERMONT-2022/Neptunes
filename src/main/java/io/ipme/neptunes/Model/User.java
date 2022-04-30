@@ -31,6 +31,7 @@ public class User {
     private String password;
 
     /*Set un avatar par défaut si l'utilisateur n'en choisit pas.*/
+    @NotBlank
     @Column(name = "avatar")
     private String avatar;
 
@@ -43,7 +44,7 @@ public class User {
 
     /*
         Constructors
-        Note : Le constructeur est nécessaire ! Ne pas supprimer !
+        Note : Le constructeur vide est nécessaire ! Ne pas supprimer !
      */
     public User() {
     }
@@ -83,11 +84,13 @@ public class User {
         return isPremium;
     }
 
-    public List<Playlist> getPlaylists() { return playlists; }
+    public List<Playlist> getPlaylists() {
+        return playlists;
+    }
 
     /*
-            Setters
-         */
+        Setters
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -107,4 +110,5 @@ public class User {
     public void setPremium(Boolean premium) {
         isPremium = premium;
     }
+
 }

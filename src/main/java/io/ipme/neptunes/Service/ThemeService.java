@@ -2,9 +2,9 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Repository.ThemeRepository;
+import io.ipme.neptunes.Service.dto.ThemeCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ public class ThemeService {
 
     private ThemeRepository themeRepository;
 
-    @Autowired
     public ThemeService(ThemeRepository themeRepository) {
         this.themeRepository = themeRepository;
     }
@@ -36,9 +35,13 @@ public class ThemeService {
         return themeDTO;
     }
 
-    public ThemeDTO createTheme(ThemeDTO themeDTO) {
-        Theme theme = new Theme(themeDTO.getTheme());
+    public ThemeDTO createTheme(ThemeCreateUpdateDTO themeCreateDTO) {
+        /*Theme creation*/
+        Theme theme = new Theme(themeCreateDTO.getTheme());
         themeRepository.save(theme);
+        /*ThemeDTO send back*/
+        ThemeDTO themeDTO = new ThemeDTO();
+        BeanUtils.copyProperties(theme, themeDTO);
         return themeDTO;
     }
 
@@ -47,15 +50,15 @@ public class ThemeService {
         themeRepository.deleteById(id);
     }
 
-    public ThemeDTO updateTheme(Integer id, ThemeDTO themeDTO) {
+    public ThemeDTO updateTheme(Integer id, ThemeCreateUpdateDTO themeUpdateDTO) {
         // Theme update
         Theme theme = themeRepository.findById(id).orElseThrow();
-        if (themeDTO.getTheme() != null) theme.setTheme(themeDTO.getTheme());
+        if (themeUpdateDTO.getTheme() != null) theme.setTheme(themeUpdateDTO.getTheme());
         themeRepository.save(theme);
         // ThemeDTO send back
-        ThemeDTO themeDTOToReturn = new ThemeDTO();
-        BeanUtils.copyProperties(theme, themeDTOToReturn);
-        return themeDTOToReturn;
+        ThemeDTO themeDTO = new ThemeDTO();
+        BeanUtils.copyProperties(theme, themeDTO);
+        return themeDTO;
     }
 
 }

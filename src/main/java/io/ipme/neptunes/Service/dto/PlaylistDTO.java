@@ -6,29 +6,44 @@ import java.util.List;
 
 public class PlaylistDTO {
 
-    private String name;
+    private Integer id;
 
-    private List<Track> tracks;
+    private String name;
 
     private Boolean isRandom;
 
-    public String getName() { return name; }
+    private List<Track> tracks;
 
-    public List<Track> getTracks() {
-        return tracks;
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Boolean getRandom() {
         return isRandom;
     }
 
-    public void setName(String name) { this.name = name; }
+    public void setRandom(Boolean random) {
+        isRandom = random;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
 
-    public void setRandom(Boolean random) {
-        isRandom = random;
-    }
 }

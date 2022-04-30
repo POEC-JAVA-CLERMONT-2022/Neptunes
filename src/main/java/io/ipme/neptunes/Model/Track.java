@@ -14,7 +14,7 @@ public class Track {
     /*attributes*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID")
     private Integer id;
 
     @NotBlank
