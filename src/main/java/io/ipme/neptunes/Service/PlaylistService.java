@@ -2,9 +2,9 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Repository.PlaylistRepository;
+import io.ipme.neptunes.Service.dto.PlaylistCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,13 +15,12 @@ public class PlaylistService {
 
     private PlaylistRepository playlistRepository;
 
-    @Autowired
     public PlaylistService(PlaylistRepository playlistRepository) {
         this.playlistRepository = playlistRepository;
     }
 
     public List<PlaylistDTO> findAll() {
-        ArrayList<PlaylistDTO> playlistDtos = new ArrayList<>();
+        List<PlaylistDTO> playlistDtos = new ArrayList<>();
         for (Playlist playlist : playlistRepository.findAll()) {
             PlaylistDTO playlistDto = new PlaylistDTO();
             BeanUtils.copyProperties(playlist, playlistDto);
@@ -31,28 +30,39 @@ public class PlaylistService {
     }
 
     public PlaylistDTO findOne(Integer id) {
-
         PlaylistDTO playlistDto = new PlaylistDTO();
         BeanUtils.copyProperties(playlistRepository.findById(id).orElseThrow(), playlistDto);
         return playlistDto;
     }
 
-    public void save(Playlist playlist) {
-        playlistRepository.saveAndFlush(playlist);
+    public PlaylistDTO save(PlaylistCreateUpdateDTO playlistCreateUpdateDTO) {
+        /*Playlist creation*/
+        Playlist playlist = new Playlist(playlistCreateUpdateDTO.getName(), playlistCreateUpdateDTO.getRandom());
+        playlistRepository.save(playlist);
+        /*DTO send back*/
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(playlist, playlistDTO);
+        return playlistDTO;
     }
 
     public void remove(Integer id) {
+        // TODO : la suppression doit supprimer dans la table track_playlist
         playlistRepository.deleteById(id);
     }
 
-    public void update(Playlist playlist, Integer id) {
+    public PlaylistDTO update(Integer id, PlaylistCreateUpdateDTO playlistUpdateDTO) {
         //TODO : gestion des exceptions
-        Playlist playlistToUpdate = playlistRepository.getById(id);
-        playlistToUpdate.setRandom(playlist.getRandom());
+        /*Playlist update*/
+        Playlist playlist = playlistRepository.findById(id).orElseThrow();
 
-        if (playlist.getTracks() != null) {
-            playlistToUpdate.setTracks(playlist.getTracks());
-        }
-        playlistRepository.save(playlistToUpdate);
+        if (playlistUpdateDTO.getName() != null) playlist.setName(playlistUpdateDTO.getName());
+        if (playlistUpdateDTO.getRandom() != null) playlist.setRandom(playlistUpdateDTO.getRandom());
+
+        playlistRepository.save(playlist);
+        /*DTO send back*/
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(playlist, playlistDTO);
+        return playlistDTO;
     }
+
 }

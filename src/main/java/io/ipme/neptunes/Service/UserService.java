@@ -7,7 +7,6 @@ import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ public class UserService {
 
     private UserRepository userRepository;
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -52,7 +50,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(Integer id, UserCreateUpdateDTO userUpdateDTO) {
-        // Update de l'user existant
+        /*User update*/
         User user = userRepository.findById(id).orElseThrow();
 
         if (userUpdateDTO.getUserName() != null) user.setUserName(userUpdateDTO.getUserName());
@@ -63,7 +61,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        // Renvoi du DTO
+        /*UserDTO send back*/
         UserDTO userDTO = new UserDTO();
         BeanUtils.copyProperties(user, userDTO);
         return userDTO;

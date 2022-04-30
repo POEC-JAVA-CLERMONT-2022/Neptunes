@@ -1,7 +1,7 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -12,11 +12,11 @@ public class Theme {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID")
     private Integer id;
 
-    @NotNull
-    @Column(name = "theme", length = 100)
+    @NotBlank
+    @Column(name = "theme")
     private String theme;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "themes")
@@ -26,7 +26,6 @@ public class Theme {
         Constructors
      */
     public Theme() {
-
     }
 
     public Theme(String theme) {
@@ -44,12 +43,12 @@ public class Theme {
         return theme;
     }
 
-    public List<Track> getTracks() {
-        return tracks;
-    }
-
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
     }
 
 }

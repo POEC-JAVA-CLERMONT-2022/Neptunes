@@ -4,9 +4,9 @@ import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.ThemeRepository;
 import io.ipme.neptunes.Repository.TrackRepository;
+import io.ipme.neptunes.Service.dto.TrackCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +19,6 @@ public class TrackService {
 
     private ThemeRepository themeRepository;
 
-    @Autowired
     public TrackService(TrackRepository trackRepository, ThemeRepository themeRepository) {
         this.trackRepository = trackRepository;
         this.themeRepository = themeRepository;
@@ -41,26 +40,35 @@ public class TrackService {
         return trackDTO;
     }
 
-    public TrackDTO save(TrackDTO trackDTO) {
-        Track track = new Track(trackDTO.getTrackName(), trackDTO.getTrackAuthor(), trackDTO.getTrackReleaseYear(), trackDTO.getTrackURL());
+    public TrackDTO save(TrackCreateUpdateDTO trackCreateDTO) {
+        /*Track creation*/
+        Track track = new Track(trackCreateDTO.getTrackName(), trackCreateDTO.getTrackAuthor(), trackCreateDTO.getTrackReleaseYear(), trackCreateDTO.getTrackURL());
         trackRepository.save(track);
+        /*TrackDTO send back*/
+        TrackDTO trackDTO = new TrackDTO();
+        BeanUtils.copyProperties(track, trackDTO);
         return trackDTO;
     }
 
     public void remove(Integer id) {
+        // TODO : supprimer aussi l'association avec les playlists et des thèmes
         trackRepository.deleteById(id);
     }
 
-    public void update(Track track, Integer id) {
+    public TrackDTO update(Integer id, TrackCreateUpdateDTO trackUpdateDTO) {
+        /*Track update*/
+        Track track = trackRepository.findById(id).orElseThrow();
 
-        Track trackToUpdate = trackRepository.getById(id);
-        trackToUpdate.setTrackName(track.getTrackName().isBlank() ? trackToUpdate.getTrackName() : track.getTrackName());
-        trackToUpdate.setTrackAuthor(track.getTrackAuthor().isBlank() ? trackToUpdate.getTrackAuthor() : track.getTrackAuthor());
-        trackToUpdate.setTrackURL(track.getTrackURL().isBlank() ? trackToUpdate.getTrackAuthor() : track.getTrackURL());
-        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() == null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
-        trackToUpdate.setTrackReleaseYear(track.getTrackReleaseYear() == null ? trackToUpdate.getTrackReleaseYear() : track.getTrackReleaseYear());
+        if (trackUpdateDTO.getTrackName() != null) track.setTrackName(trackUpdateDTO.getTrackName());
+        if (trackUpdateDTO.getTrackAuthor() != null) track.setTrackAuthor(trackUpdateDTO.getTrackAuthor());
+        if (trackUpdateDTO.getTrackReleaseYear() != null) track.setTrackReleaseYear(trackUpdateDTO.getTrackReleaseYear());
+        if (trackUpdateDTO.getTrackURL() != null) track.setTrackURL(trackUpdateDTO.getTrackURL());
 
-        trackRepository.save(trackToUpdate);
+        trackRepository.save(track);
+        /*TrackDTO send back*/
+        TrackDTO trackDTO = new TrackDTO();
+        BeanUtils.copyProperties(track, trackDTO);
+        return trackDTO;
     }
 
     public void setTheme(Integer trackId, ArrayList<Integer> themeIds) {

@@ -1,12 +1,13 @@
 package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Service.ThemeService;
+import io.ipme.neptunes.Service.dto.ThemeCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,6 @@ public class ThemeController {
 
     private ThemeService themeService;
 
-    @Autowired
     public ThemeController(ThemeService themeService) {
         this.themeService = themeService;
     }
@@ -42,10 +42,10 @@ public class ThemeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTheme(@RequestBody ThemeDTO themeDTO) {
+    public ResponseEntity<?> createTheme(@Valid @RequestBody ThemeCreateUpdateDTO themeCreateDTO) {
         try {
-            if (themeDTO != null) {
-                return ResponseEntity.ok(themeService.createTheme(themeDTO));
+            if (themeCreateDTO != null) {
+                return ResponseEntity.ok(themeService.createTheme(themeCreateDTO));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
@@ -67,10 +67,10 @@ public class ThemeController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> updateTheme(@PathVariable Integer id, @RequestBody ThemeDTO themeDTO) {
+    public ResponseEntity<?> updateTheme(@PathVariable Integer id, @Valid @RequestBody ThemeCreateUpdateDTO themeUpdateDTO) {
         try {
-            if (id != null && themeDTO != null) {
-                return ResponseEntity.ok(themeService.updateTheme(id, themeDTO));
+            if (id != null && themeUpdateDTO != null) {
+                return ResponseEntity.ok(themeService.updateTheme(id, themeUpdateDTO));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

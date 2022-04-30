@@ -1,27 +1,27 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Playlist {
 
-    public Playlist() {
-
-    }
+    /*attributes*/
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID")
     private Integer id;
 
-    @NotNull
+    @NotBlank
     @Column(name = "name")
     private String name;
 
     @NotNull
-    @Column(name = "is_random", length = 100)
+    @Column(name = "is_random")
     private Boolean isRandom;
 
     @NotNull
@@ -31,6 +31,18 @@ public class Playlist {
     @NotNull
     @OneToMany(fetch = FetchType.LAZY)
     private List<Game> games;
+
+    /*constructors*/
+
+    public Playlist() {
+    }
+
+    public Playlist(String name, Boolean isRandom) {
+        this.name = name;
+        this.isRandom = isRandom;
+        this.tracks = new ArrayList<>();
+        this.games = new ArrayList<>();
+    }
 
     /*getters-setters*/
 
@@ -60,10 +72,6 @@ public class Playlist {
 
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
     }
 
 }

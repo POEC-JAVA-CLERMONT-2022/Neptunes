@@ -1,9 +1,8 @@
 package io.ipme.neptunes.Controller;
 
-import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Service.TrackService;
+import io.ipme.neptunes.Service.dto.TrackCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.TrackDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ public class TrackController {
 
     private TrackService trackService;
 
-    @Autowired
     public TrackController(TrackService trackService) {
         this.trackService = trackService;
     }
@@ -46,10 +44,10 @@ public class TrackController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createTrack(@RequestBody TrackDTO trackDTO) {
+    public ResponseEntity<?> createTrack(@Valid @RequestBody TrackCreateUpdateDTO trackCreateDTO) {
         try {
-            if (trackDTO != null) {
-                return ResponseEntity.ok(trackService.save(trackDTO));
+            if (trackCreateDTO != null) {
+                return ResponseEntity.ok(trackService.save(trackCreateDTO));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
@@ -58,7 +56,7 @@ public class TrackController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<String> removeTrack(@Valid @PathVariable Integer id) {
+    public ResponseEntity<String> removeTrack(@PathVariable Integer id) {
         try {
             if (id != null) {
                 trackService.remove(id);
@@ -71,11 +69,10 @@ public class TrackController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<String> updateTrack(@Valid @RequestBody Track track, @Valid @PathVariable Integer id) {
+    public ResponseEntity<?> updateTrack(@PathVariable Integer id, @Valid @RequestBody TrackCreateUpdateDTO trackUpdateDTO) {
         try {
-            if (id != null && track != null) {
-                trackService.update(track, id);
-                return ResponseEntity.ok().build();
+            if (id != null && trackUpdateDTO != null) {
+                return ResponseEntity.ok(trackService.update(id, trackUpdateDTO));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

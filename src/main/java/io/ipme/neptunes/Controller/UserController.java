@@ -5,11 +5,11 @@ import io.ipme.neptunes.Service.UserService;
 import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,7 +20,6 @@ public class UserController {
     private UserService userService;
     private PlaylistService playlistService;
 
-    @Autowired
     public UserController(UserService userService, PlaylistService playlistService) {
         this.userService = userService;
         this.playlistService = playlistService;
@@ -48,7 +47,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody UserCreateUpdateDTO userCreateDTO) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserCreateUpdateDTO userCreateDTO) {
         try {
             if (userCreateDTO != null) {
                 UserDTO userDTO = userService.createUser(userCreateDTO);
@@ -74,7 +73,7 @@ public class UserController {
     }
 
     @PatchMapping("{id}")
-    public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody UserCreateUpdateDTO userUpdateDTO) {
+    public ResponseEntity<?> updateUser(@PathVariable Integer id, @Valid @RequestBody UserCreateUpdateDTO userUpdateDTO) {
         try {
             if (userUpdateDTO != null) {
                 UserDTO userDTO = userService.updateUser(id, userUpdateDTO);

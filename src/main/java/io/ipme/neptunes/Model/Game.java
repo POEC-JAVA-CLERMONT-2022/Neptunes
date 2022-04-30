@@ -1,6 +1,7 @@
 package io.ipme.neptunes.Model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -10,18 +11,17 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", unique = true, nullable = false)
+    @Column(name = "ID")
     private Integer id;
 
-    @NotNull
-    @Column(name = "game_url", length = 100)
+    @NotBlank
+    @Column(name = "game_url")
     private String gameUrl;
 
     @NotNull
     @Column(name = "is_paused")
     private Boolean isPaused;
 
-    @NotNull
     @Column(name = "mode")
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
