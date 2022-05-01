@@ -1,22 +1,27 @@
 package io.ipme.neptunes.Service.dto;
 
-import io.ipme.neptunes.Model.UserGamePK;
+import io.ipme.neptunes.Model.Game;
 
 public class UserGameDTO {
-    private String user;
+
+    private Game game;
 
     private Integer score;
 
-    public UserGameDTO(UserGamePK userGamePK, Integer score) {
-        this.user = userGamePK.getUser().getUserName();
-        this.score = score;
+    public Game getGame() {
+        return game;
     }
 
-    public String getUser() {
-        return user;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
     public Integer getScore() {
         return score;
     }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
 }

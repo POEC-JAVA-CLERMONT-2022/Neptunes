@@ -16,6 +16,11 @@ public class UserGamePK implements Serializable {
     protected UserGamePK() {
     }
 
+    public UserGamePK(User user, Game game) {
+        this.user = user;
+        this.game = game;
+    }
+
     public User getUser() {
         return user;
     }

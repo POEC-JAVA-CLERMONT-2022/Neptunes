@@ -1,6 +1,8 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.User;
+import io.ipme.neptunes.Repository.PlaylistRepository;
+import io.ipme.neptunes.Repository.UserGameRepository;
 import io.ipme.neptunes.Repository.UserRepository;
 import io.ipme.neptunes.Service.dto.UserDTO;
 import org.assertj.core.api.Assertions;
@@ -25,12 +27,18 @@ public class UserServiceTestUnitaire {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private PlaylistRepository playlistRepository;
+
+    @Mock
+    private UserGameRepository userGameRepository;
+
     @Autowired
     private UserService userService;
 
     @BeforeEach
     void setupBeforeEach() {
-        userService = new UserService(userRepository);
+        userService = new UserService(userRepository, playlistRepository, userGameRepository);
     }
 
     @Test

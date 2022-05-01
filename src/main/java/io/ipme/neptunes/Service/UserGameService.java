@@ -18,11 +18,11 @@ public class UserGameService {
         this.userGameRepository = userGameRepository;
     }
 
-    public ArrayList<UserGameDTO> findGameUsersScoreById(Integer id) {
+/*    public ArrayList<UserGameDTO> findGameUsersScoreById(Integer id) {
         ArrayList<UserGameDTO> userGameDtos = new ArrayList<>();
         for (UserGame userGame : userGameRepository.findByUserGamePK_Game_Id(id)) {
             userGameDtos.add(new UserGameDTO(userGame.getUserGamePK(), userGame.getScore()));
         }
         return userGameDtos;
-    }
+    }*/
 }

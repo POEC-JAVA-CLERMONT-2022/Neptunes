@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface UserGameRepository extends JpaRepository<UserGame, UserGamePK> {
 
-    List<UserGame> findByUserGamePK_Game_Id(Integer id);
+    List<UserGame> findByUserGamePK_user_Id(Integer id);
 }
