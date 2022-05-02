@@ -2,9 +2,7 @@ package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Service.PlaylistService;
 import io.ipme.neptunes.Service.UserService;
-import io.ipme.neptunes.Service.dto.PlaylistDTO;
-import io.ipme.neptunes.Service.dto.UserCreateUpdateDTO;
-import io.ipme.neptunes.Service.dto.UserDTO;
+import io.ipme.neptunes.Service.dto.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +15,9 @@ import java.util.List;
 // TODO : throw(new Exception) / Classe Exception personnalisable
 public class UserController {
 
+    /*
+        Initialisation
+     */
     private UserService userService;
     private PlaylistService playlistService;
 
@@ -25,6 +26,9 @@ public class UserController {
         this.playlistService = playlistService;
     }
 
+    /*
+        CRUD Mapping
+     */
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll() {
         try {
@@ -85,11 +89,78 @@ public class UserController {
         }
     }
 
+    /*
+        Playlist's Methods Mapping
+     */
     @GetMapping("{id}/playlists")
-    public ResponseEntity<List<PlaylistDTO>> getUserPlaylists(@PathVariable Integer id) {
+    public ResponseEntity<List<PlaylistDTO>> getPlaylists(@PathVariable Integer id) {
         try {
             if (id != null) {
-                return ResponseEntity.ok(userService.getUserPlaylists(id));
+                return ResponseEntity.ok(userService.getPlaylists(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("{id}/playlists/{pId}")
+    public ResponseEntity<PlaylistDTO> getPlaylistById(@PathVariable Integer id, @PathVariable Integer pId) {
+        try {
+            if (id != null && pId != null) {
+                return ResponseEntity.ok(userService.getPlaylistById(id, pId));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PostMapping("{id}/playlists")
+    public ResponseEntity<?> addPlaylist(@PathVariable Integer id, @Valid @RequestBody PlaylistCreateUpdateDTO playlistCreateDTO) {
+        try {
+            if (id != null && playlistCreateDTO != null) {
+                return ResponseEntity.ok(userService.addPlaylist(id, playlistCreateDTO));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}/playlists/{pId}")
+    public ResponseEntity<String> deletePlaylist(@PathVariable Integer id, @PathVariable Integer pId) {
+        try {
+            if (id != null && pId != null) {
+                userService.deletePlaylist(id, pId);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /*
+        Score's Methods Mapping
+     */
+    @GetMapping("{id}/usergames")
+    public ResponseEntity<List<UserGameDTOForUser>> getScores(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                return ResponseEntity.ok(userService.getScores(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("{id}/usergames/{gId}")
+    public ResponseEntity<UserGameDTOForUser> getScoreForGame(@PathVariable Integer id, @PathVariable Integer gId) {
+        try {
+            if (id != null && gId != null) {
+                return ResponseEntity.ok(userService.getScoreForGame(id, gId));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
