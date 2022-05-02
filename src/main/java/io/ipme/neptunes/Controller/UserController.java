@@ -1,6 +1,5 @@
 package io.ipme.neptunes.Controller;
 
-import io.ipme.neptunes.Model.UserGame;
 import io.ipme.neptunes.Service.PlaylistService;
 import io.ipme.neptunes.Service.UserService;
 import io.ipme.neptunes.Service.dto.*;
@@ -146,7 +145,7 @@ public class UserController {
         Score's Methods Mapping
      */
     @GetMapping("{id}/usergames")
-    public ResponseEntity<List<UserGameDTO>> getScores(@PathVariable Integer id) {
+    public ResponseEntity<List<UserGameDTOForUser>> getScores(@PathVariable Integer id) {
         try {
             if (id != null) {
                 return ResponseEntity.ok(userService.getScores(id));
@@ -157,11 +156,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("{id}/usergames/{gid}")
-    public ResponseEntity<UserGameDTO> getScoreForGame(@PathVariable Integer id, @PathVariable Integer gId) {
+    @GetMapping("{id}/usergames/{gId}")
+    public ResponseEntity<UserGameDTOForUser> getScoreForGame(@PathVariable Integer id, @PathVariable Integer gId) {
         try {
             if (id != null && gId != null) {
-                /*return de la méthode*/
+                return ResponseEntity.ok(userService.getScoreForGame(id, gId));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

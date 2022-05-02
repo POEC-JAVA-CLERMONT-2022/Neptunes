@@ -1,19 +1,17 @@
 package io.ipme.neptunes.Service.dto;
 
-import io.ipme.neptunes.Model.Game;
+public class UserGameDTOForUser {
 
-public class UserGameDTO {
-
-    private Game game;
+    private Integer gameId;
 
     private Integer score;
 
-    public Game getGame() {
-        return game;
+    public Integer getGameId() {
+        return gameId;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGameId(Integer gameId) {
+        this.gameId = gameId;
     }
 
     public Integer getScore() {

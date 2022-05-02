@@ -3,7 +3,6 @@ package io.ipme.neptunes.Service;
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Model.User;
 import io.ipme.neptunes.Model.UserGame;
-import io.ipme.neptunes.Model.UserGamePK;
 import io.ipme.neptunes.Repository.PlaylistRepository;
 import io.ipme.neptunes.Repository.UserGameRepository;
 import io.ipme.neptunes.Repository.UserRepository;
@@ -132,21 +131,22 @@ public class UserService {
     /*
         Scores Methods
      */
-    public List<UserGameDTO> getScores(Integer id) {
-        List<UserGameDTO> userGameDTOS = new ArrayList<>();
+    public List<UserGameDTOForUser> getScores(Integer id) {
+        List<UserGameDTOForUser> userGameDTOForUsers = new ArrayList<>();
         for (UserGame userGame : userGameRepository.findByUserGamePK_user_Id(id)) {
-            UserGameDTO userGameDTO = new UserGameDTO();
-            BeanUtils.copyProperties(userGame, userGameDTO);
-            userGameDTOS.add(userGameDTO);
+            UserGameDTOForUser userGameDTOForUser = new UserGameDTOForUser();
+            BeanUtils.copyProperties(userGame, userGameDTOForUser);
+            userGameDTOForUser.setGameId(userGame.getUserGamePK().getGame().getId());
+            userGameDTOForUsers.add(userGameDTOForUser);
         }
-        return userGameDTOS;
+        return userGameDTOForUsers;
     }
 
-/*
-    public UserGameDTO getScoreForGame(Integer id, Integer gId) {
-        UserGameDTO userGameDTO = new UserGameDTO();
-        BeanUtils.copyProperties(userGameRepository.findById());
+    public UserGameDTOForUser getScoreForGame(Integer id, Integer gId) {
+        UserGameDTOForUser userGameDTO = new UserGameDTOForUser();
+        BeanUtils.copyProperties(userGameRepository.findByUserGamePK_user_idAndUserGamePK_game_id(id, gId), userGameDTO);
+        userGameDTO.setGameId(gId);
+        return userGameDTO;
     }
-*/
 
 }
