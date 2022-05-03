@@ -28,17 +28,17 @@ public class UserServiceTestUnitaire {
     private UserRepository userRepository;
 
     @Mock
-    private PlaylistRepository playlistRepository;
+    private PlaylistService playlistService;
 
     @Mock
-    private UserGameRepository userGameRepository;
+    private UserGameService userGameService;
 
     @Autowired
     private UserService userService;
 
     @BeforeEach
     void setupBeforeEach() {
-        userService = new UserService(userRepository, playlistRepository, userGameRepository);
+        userService = new UserService(userRepository, playlistService, userGameService);
     }
 
     @Test

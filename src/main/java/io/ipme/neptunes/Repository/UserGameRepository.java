@@ -3,8 +3,6 @@ package io.ipme.neptunes.Repository;
 import io.ipme.neptunes.Model.UserGame;
 import io.ipme.neptunes.Model.UserGamePK;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
