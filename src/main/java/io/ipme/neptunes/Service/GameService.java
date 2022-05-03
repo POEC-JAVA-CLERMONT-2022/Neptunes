@@ -14,12 +14,18 @@ import java.util.List;
 @Service
 public class GameService {
 
+    /*
+        Initialization
+     */
     private GameRepository gameRepository;
 
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
 
+    /*
+        CRUD Methods
+     */
     public List<GameDTO> findAll() {
         List<GameDTO> gameDTOS = new ArrayList<>();
         for (Game game : gameRepository.findAll()) {
