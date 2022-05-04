@@ -2,6 +2,7 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.UserGame;
 import io.ipme.neptunes.Repository.UserGameRepository;
+import io.ipme.neptunes.Service.dto.UserGameDTOForGame;
 import io.ipme.neptunes.Service.dto.UserGameDTOForUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,25 @@ public class UserGameService {
     /*
         CRUD methods for games
      */
+    public List<UserGameDTOForGame> findByGameId(Integer gameId) {
+        List<UserGameDTOForGame> userGameDtos = new ArrayList<>();
+        for (UserGame userGame : userGameRepository.findByUserGamePK_game_Id(gameId)) {
+            UserGameDTOForGame userGameDTOForGame = new UserGameDTOForGame();
+            BeanUtils.copyProperties(userGame, userGameDTOForGame);
+            userGameDTOForGame.setUserId(userGame.getUserGamePK().getUser().getId());
+            userGameDTOForGame.setUserName(userGame.getUserGamePK().getUser().getUserName());
+            userGameDtos.add(userGameDTOForGame);
+        }
+        return userGameDtos;
+    }
+
+    public UserGameDTOForGame findHighScore(Integer gameId) {
+        UserGameDTOForGame userGameDTO = new UserGameDTOForGame();
+        List<UserGame> userGames = userGameRepository.findByUserGamePK_game_idOrderByScoreDesc(gameId);
+        BeanUtils.copyProperties(userGames.get(0), userGameDTO);
+        userGameDTO.setUserId(userGames.get(0).getUserGamePK().getUser().getId());
+        userGameDTO.setUserName(userGames.get(0).getUserGamePK().getUser().getUserName());
+        return userGameDTO;
+    }
 
 }

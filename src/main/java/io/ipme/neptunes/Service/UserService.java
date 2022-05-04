@@ -14,9 +14,9 @@ import java.util.List;
 public class UserService {
 
     // region Initialization
-    private UserRepository userRepository;
-    private PlaylistService playlistService;
-    private UserGameService userGameService;
+    private final UserRepository userRepository;
+    private final PlaylistService playlistService;
+    private final UserGameService userGameService;
 
     public UserService(UserRepository userRepository, PlaylistService playlistService, UserGameService userGameService) {
         this.userRepository = userRepository;
@@ -125,4 +125,5 @@ public class UserService {
         return userGameService.findByUserIdAndGameId(id, gId);
     }
     // endregion
+
 }

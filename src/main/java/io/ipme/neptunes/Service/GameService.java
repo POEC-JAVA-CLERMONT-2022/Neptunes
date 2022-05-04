@@ -2,9 +2,12 @@ package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Game;
 import io.ipme.neptunes.Model.GameMode;
+import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Repository.GameRepository;
 import io.ipme.neptunes.Service.dto.GameDTO;
 import io.ipme.neptunes.Service.dto.GameCreateUpdateDTO;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
+import io.ipme.neptunes.Service.dto.UserGameDTOForGame;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +17,19 @@ import java.util.List;
 @Service
 public class GameService {
 
-    private GameRepository gameRepository;
+    // region Initialization
+    private final GameRepository gameRepository;
+    private final PlaylistService playlistService;
+    private final UserGameService userGameService;
 
-    public GameService(GameRepository gameRepository) {
+    public GameService(GameRepository gameRepository, PlaylistService playlistService, UserGameService userGameService) {
         this.gameRepository = gameRepository;
+        this.playlistService = playlistService;
+        this.userGameService = userGameService;
     }
+    // endregion
 
+    // region CRUD
     public List<GameDTO> findAll() {
         List<GameDTO> gameDTOS = new ArrayList<>();
         for (Game game : gameRepository.findAll()) {
@@ -45,7 +55,6 @@ public class GameService {
     }
 
     public void deleteGame(Integer id) {
-        // TODO : la suppression doit également supprimer les scores liés et couper l'association avec sa playlist
         gameRepository.deleteById(id);
     }
 
@@ -74,5 +83,34 @@ public class GameService {
         BeanUtils.copyProperties(game, gameDTO);
         return gameDTO;
     }
+    // endregion
+
+    // region Playlist
+    public PlaylistDTO getPlaylist(Integer id) {
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(gameRepository.findById(id).orElseThrow().getPlaylist(), playlistDTO);
+        return playlistDTO;
+    }
+
+    public PlaylistDTO setPlaylist(Integer id, Integer pId) {
+        /*Playlist add*/
+        Game game = gameRepository.findById(id).orElseThrow();
+        game.setPlaylist(new Playlist(pId));
+        gameRepository.save(game);
+
+        /*PlaylistDTO send back*/
+        return playlistService.findOne(pId);
+    }
+    // endregion
+
+    // region Score
+    public List<UserGameDTOForGame> getScores(Integer id) {
+        return userGameService.findByGameId(id);
+    }
+
+    public UserGameDTOForGame getHighScore(Integer id) {
+        return userGameService.findHighScore(id);
+    }
+    // endregion
 
 }

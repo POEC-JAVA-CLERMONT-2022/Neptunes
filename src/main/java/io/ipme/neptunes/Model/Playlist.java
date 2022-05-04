@@ -29,8 +29,7 @@ public class Playlist {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
     private List<Track> tracks;
 
-    @NotNull
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "playlist")
     private List<Game> games;
 
     /*constructors*/

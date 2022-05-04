@@ -4,6 +4,8 @@ import io.ipme.neptunes.Service.GameService;
 import io.ipme.neptunes.Service.UserGameService;
 import io.ipme.neptunes.Service.dto.GameDTO;
 import io.ipme.neptunes.Service.dto.GameCreateUpdateDTO;
+import io.ipme.neptunes.Service.dto.PlaylistDTO;
+import io.ipme.neptunes.Service.dto.UserGameDTOForGame;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +17,18 @@ import java.util.List;
 @RequestMapping("games")
 public class GameController {
 
+    /*
+        Initialization
+     */
     private GameService gameService;
 
     public GameController(GameService gameService, UserGameService userGameService) {
         this.gameService = gameService;
     }
 
+    /*
+        CRUD Mapping
+     */
     @GetMapping
     public ResponseEntity<List<GameDTO>> getAll() {
         try {
@@ -41,7 +49,6 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
-
 
     @PostMapping
     public ResponseEntity<?> createGame(@Valid @RequestBody GameCreateUpdateDTO gameDTOCreateDTO) {
@@ -91,6 +98,60 @@ public class GameController {
             return ResponseEntity.badRequest().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /*
+        Playlist Mapping
+     */
+    @GetMapping("{id}/playlists")
+    public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                return ResponseEntity.ok(gameService.getPlaylist(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PutMapping("{id}/playlists/{pId}")
+    public ResponseEntity<?> setPlaylist(@PathVariable Integer id, @PathVariable Integer pId) {
+        try {
+            if (id != null && pId != null) {
+                return ResponseEntity.ok(gameService.setPlaylist(id, pId));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    /*
+        Score Mapping
+     */
+    @GetMapping("{id}/usergames")
+    public ResponseEntity<List<UserGameDTOForGame>> getScores(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                return ResponseEntity.ok(gameService.getScores(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("{id}/usergames/highscore")
+    public ResponseEntity<UserGameDTOForGame> getHighScore(@PathVariable Integer id) {
+        try {
+            if (id != null) {
+                return ResponseEntity.ok(gameService.getHighScore(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 

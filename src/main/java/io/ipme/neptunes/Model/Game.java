@@ -26,9 +26,16 @@ public class Game {
     @Enumerated(EnumType.STRING)
     private GameMode gameMode;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Playlist playlist;
+
     /*Constructors*/
 
     public Game() {
+    }
+
+    public Game(Integer id) {
+        this.id = id;
     }
 
     public Game(String gameUrl, Boolean isPaused, GameMode gameMode) {
@@ -55,6 +62,10 @@ public class Game {
         return gameMode;
     }
 
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+
     /*setter*/
 
     public void setGameMode(GameMode gameMode) { this.gameMode = gameMode; }
@@ -63,4 +74,7 @@ public class Game {
 
     public void setPaused(Boolean paused) { isPaused = paused; }
 
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
 }
