@@ -17,18 +17,15 @@ import java.util.List;
 @RequestMapping("games")
 public class GameController {
 
-    /*
-        Initialization
-     */
-    private GameService gameService;
+    // region Initialization
+    private final GameService gameService;
 
     public GameController(GameService gameService, UserGameService userGameService) {
         this.gameService = gameService;
     }
+    // endregion
 
-    /*
-        CRUD Mapping
-     */
+    // region CRUD
     @GetMapping
     public ResponseEntity<List<GameDTO>> getAll() {
         try {
@@ -52,7 +49,6 @@ public class GameController {
 
     @PostMapping
     public ResponseEntity<?> createGame(@Valid @RequestBody GameCreateUpdateDTO gameDTOCreateDTO) {
-
         try {
             if (gameDTOCreateDTO != null) {
                 return ResponseEntity.ok(gameService.createGame(gameDTOCreateDTO));
@@ -64,8 +60,7 @@ public class GameController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteGame(@PathVariable Integer id) {
-
+    public ResponseEntity<String> deleteGame(@PathVariable Integer id) {
         try {
             if (id != null) {
                 gameService.deleteGame(id);
@@ -88,22 +83,9 @@ public class GameController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // endregion
 
-    @PutMapping("{id}")
-    public ResponseEntity<?> updateGameMode(@RequestBody String gameModeName, @PathVariable Integer id) {
-        try {
-            if (gameModeName != null && id != null) {
-                return ResponseEntity.ok(gameService.setGameMode(id, gameModeName));
-            }
-            return ResponseEntity.badRequest().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
-    /*
-        Playlist Mapping
-     */
+    // region Playlist
     @GetMapping("{id}/playlists")
     public ResponseEntity<PlaylistDTO> getPlaylist(@PathVariable Integer id) {
         try {
@@ -127,10 +109,9 @@ public class GameController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // endregion
 
-    /*
-        Score Mapping
-     */
+    // region Score
     @GetMapping("{id}/usergames")
     public ResponseEntity<List<UserGameDTOForGame>> getScores(@PathVariable Integer id) {
         try {
@@ -154,5 +135,45 @@ public class GameController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @PostMapping("{id}/usergames/{uId}")
+    public ResponseEntity<?> addUserToGame(@PathVariable Integer id, @PathVariable Integer uId) {
+        try {
+            if (id != null && uId != null) {
+                gameService.addUserToGame(id, uId);
+                return ResponseEntity.status(HttpStatus.CREATED).build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}/usergames/{uId}")
+    public ResponseEntity<String> removeUserFromGame(@PathVariable Integer id, @PathVariable Integer uId) {
+        try {
+            if (id != null && uId != null) {
+                gameService.removeUserFromGame(id, uId);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("{id}/usergames/{uId}")
+    public ResponseEntity<String> addPoints(@PathVariable Integer id, @PathVariable Integer uId, @Valid @RequestBody Integer points) {
+        try {
+            if (id != null && uId != null && points != null) {
+                gameService.addPoints(id, uId, points);
+                return ResponseEntity.ok().build();
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    // endregion
 
 }
