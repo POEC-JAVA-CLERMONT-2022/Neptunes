@@ -17,12 +17,21 @@ public class UserGame {
     @Column(name = "score")
     private Integer score;
 
-    protected UserGame() {
+    public UserGame() {
 
+    }
+
+    public UserGame(UserGamePK userGamePK, Integer score) {
+        this.userGamePK = userGamePK;
+        this.score = score;
     }
 
     public UserGamePK getUserGamePK() {
         return userGamePK;
+    }
+
+    public void setUserGamePK(UserGamePK userGamePK) {
+        this.userGamePK = userGamePK;
     }
 
     public Integer getScore() {

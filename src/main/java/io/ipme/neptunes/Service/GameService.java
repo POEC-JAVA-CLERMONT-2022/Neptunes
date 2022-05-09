@@ -1,11 +1,10 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Game;
-import io.ipme.neptunes.Model.GameMode;
 import io.ipme.neptunes.Model.Playlist;
 import io.ipme.neptunes.Repository.GameRepository;
-import io.ipme.neptunes.Service.dto.GameDTO;
 import io.ipme.neptunes.Service.dto.GameCreateUpdateDTO;
+import io.ipme.neptunes.Service.dto.GameDTO;
 import io.ipme.neptunes.Service.dto.PlaylistDTO;
 import io.ipme.neptunes.Service.dto.UserGameDTOForGame;
 import org.springframework.beans.BeanUtils;
@@ -58,7 +57,6 @@ public class GameService {
         gameRepository.deleteById(id);
     }
 
-    // TODO : Mapstruct
     public GameDTO updateGame(Integer id, GameCreateUpdateDTO gameUpdateDTO) {
         // Game update
         Game game = gameRepository.findById(id).orElseThrow();
@@ -70,15 +68,6 @@ public class GameService {
         gameRepository.save(game);
 
         // GameDTO send back
-        GameDTO gameDTO = new GameDTO();
-        BeanUtils.copyProperties(game, gameDTO);
-        return gameDTO;
-    }
-
-    public GameDTO setGameMode(Integer id, String gameMode) {
-        Game game = gameRepository.findById(id).orElseThrow();
-        game.setGameMode(GameMode.getMode(gameMode));
-        gameRepository.save(game);
         GameDTO gameDTO = new GameDTO();
         BeanUtils.copyProperties(game, gameDTO);
         return gameDTO;
@@ -110,6 +99,18 @@ public class GameService {
 
     public UserGameDTOForGame getHighScore(Integer id) {
         return userGameService.findHighScore(id);
+    }
+
+    public void addUserToGame(Integer id, Integer uId) {
+        userGameService.addUserToGame(id, uId);
+    }
+
+    public void removeUserFromGame(Integer id, Integer uId) {
+        userGameService.removeUserFromGame(id, uId);
+    }
+
+    public void addPoints(Integer id, Integer uId, Integer points) {
+        userGameService.addPoints(id, uId, points);
     }
     // endregion
 
