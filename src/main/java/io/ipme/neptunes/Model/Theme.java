@@ -3,6 +3,7 @@ package io.ipme.neptunes.Model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Theme {
@@ -28,6 +29,10 @@ public class Theme {
     public Theme() {
     }
 
+    public Theme(Integer id) {
+        this.id = id;
+    }
+
     public Theme(String theme) {
         this.theme = theme;
     }
@@ -49,6 +54,22 @@ public class Theme {
 
     public List<Track> getTracks() {
         return tracks;
+    }
+
+    /*
+       Override methods
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Theme theme = (Theme) o;
+        return id.equals(theme.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
 }
