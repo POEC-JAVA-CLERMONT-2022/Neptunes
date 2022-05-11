@@ -1,6 +1,7 @@
 package io.ipme.neptunes.Controller;
 
 import io.ipme.neptunes.Service.TrackService;
+import io.ipme.neptunes.Service.dto.ThemeDTO;
 import io.ipme.neptunes.Service.dto.TrackCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,15 @@ import java.util.List;
 //TODO : utiliser des logger !!!
 public class TrackController {
 
-    private TrackService trackService;
+    // region Initialization
+    private final TrackService trackService;
 
     public TrackController(TrackService trackService) {
         this.trackService = trackService;
     }
+    // endregion
 
+    // region CRUD
     @GetMapping
     public ResponseEntity<List<TrackDTO>> getAll() {
         try {
@@ -79,31 +83,58 @@ public class TrackController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // endregion
 
-    @PutMapping("{id}")
-    public ResponseEntity<String> setThemes(@RequestBody ArrayList<Integer> themeIds, @PathVariable Integer id) {
+    // region Themes
+    @GetMapping("{id}/themes")
+    public ResponseEntity<List<ThemeDTO>> getThemes(@PathVariable Integer id) {
         try {
-            if (themeIds != null && id != null) {
-                trackService.setTheme(id, themeIds);
+            if (id != null) {
+                return ResponseEntity.ok(trackService.getThemes(id));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @GetMapping("{id}/themes/{thId}")
+    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable Integer id, @PathVariable Integer thId) {
+        try {
+            if (id != null && thId != null) {
+                return ResponseEntity.ok(trackService.getThemeById(id, thId));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    @PatchMapping("{id}/themes/{thId}")
+    public ResponseEntity<String> setThemes(@PathVariable Integer id, @PathVariable Integer thId) {
+        try {
+            if (id != null && thId != null) {
+                trackService.setTheme(id, thId);
                 return ResponseEntity.ok().build();
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("{id}/themes/{themeId}")
-    public ResponseEntity<String> deleteTheme(@PathVariable Integer id, @PathVariable Integer themeId) {
+    @DeleteMapping("{id}/themes/{thId}")
+    public ResponseEntity<String> deleteTheme(@PathVariable Integer id, @PathVariable Integer thId) {
         try {
-            if (id != null && themeId != null) {
-                trackService.deleteTheme(id, themeId);
+            if (id != null && thId != null) {
+                trackService.deleteTheme(id, thId);
                 return ResponseEntity.ok().build();
             }
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // endregion
 
 }

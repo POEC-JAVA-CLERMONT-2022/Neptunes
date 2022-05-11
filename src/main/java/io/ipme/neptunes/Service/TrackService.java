@@ -4,6 +4,7 @@ import io.ipme.neptunes.Model.Theme;
 import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.ThemeRepository;
 import io.ipme.neptunes.Repository.TrackRepository;
+import io.ipme.neptunes.Service.dto.ThemeDTO;
 import io.ipme.neptunes.Service.dto.TrackCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.beans.BeanUtils;
@@ -15,15 +16,17 @@ import java.util.List;
 @Service
 public class TrackService {
 
-    private TrackRepository trackRepository;
+    // region Initialization
+    private final TrackRepository trackRepository;
+    private final ThemeService themeService;
 
-    private ThemeRepository themeRepository;
-
-    public TrackService(TrackRepository trackRepository, ThemeRepository themeRepository) {
+    public TrackService(TrackRepository trackRepository, ThemeService themeService) {
         this.trackRepository = trackRepository;
-        this.themeRepository = themeRepository;
+        this.themeService = themeService;
     }
+    // endregion
 
+    // region CRUD
     public List<TrackDTO> findAll() {
         List<TrackDTO> trackDTOS = new ArrayList<>();
         for (Track track : trackRepository.findAll()) {
@@ -51,7 +54,6 @@ public class TrackService {
     }
 
     public void remove(Integer id) {
-        // TODO : supprimer aussi l'association avec les playlists et des thèmes
         trackRepository.deleteById(id);
     }
 
@@ -70,21 +72,36 @@ public class TrackService {
         BeanUtils.copyProperties(track, trackDTO);
         return trackDTO;
     }
+    // endregion
 
-    public void setTheme(Integer trackId, ArrayList<Integer> themeIds) {
-        Track track = trackRepository.findById(trackId).orElseThrow();
-        for (Integer id : themeIds) {
-            Theme theme = themeRepository.findById(id).orElseThrow();
-            theme.getTracks().add(track);
-            track.getThemes().add(theme);
+    // region Themes
+    public List<ThemeDTO> getThemes(Integer id) {
+        List<ThemeDTO> themeDTOS = new ArrayList<>();
+        for (Theme theme : trackRepository.findById(id).orElseThrow().getThemes()) {
+            ThemeDTO themeDTO = new ThemeDTO();
+            BeanUtils.copyProperties(theme, themeDTO);
+            themeDTOS.add(themeDTO);
         }
-        trackRepository.saveAndFlush(track);
+        return themeDTOS;
     }
 
-    public void deleteTheme(Integer trackId, Integer themeId) {
-        Track track = trackRepository.findById(trackId).orElseThrow();
-        track.getThemes().remove(themeRepository.findById(themeId).orElseThrow());
-        trackRepository.saveAndFlush(track);
+    public ThemeDTO getThemeById(Integer id, Integer thId) throws Exception {
+        if (trackRepository.findById(id).orElseThrow().getThemes().contains(new Theme(thId))) {
+            return themeService.findById(thId);
+        } else throw new Exception("Le thème sélectionné ne correspond pas à la track sélectionnée !");
     }
+
+    public void setTheme(Integer id, Integer thId) {
+        Track track = trackRepository.findById(id).orElseThrow();
+        track.getThemes().add(new Theme(thId));
+        trackRepository.save(track);
+    }
+
+    public void deleteTheme(Integer id, Integer thId) {
+        Track track = trackRepository.findById(id).orElseThrow();
+        track.getThemes().remove(new Theme(thId));
+        trackRepository.save(track);
+    }
+    // endregion
 
 }
