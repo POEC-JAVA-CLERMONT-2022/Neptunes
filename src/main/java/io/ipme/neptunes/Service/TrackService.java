@@ -18,11 +18,9 @@ public class TrackService {
 
     // region Initialization
     private final TrackRepository trackRepository;
-    private final ThemeService themeService;
 
-    public TrackService(TrackRepository trackRepository, ThemeService themeService) {
+    public TrackService(TrackRepository trackRepository) {
         this.trackRepository = trackRepository;
-        this.themeService = themeService;
     }
     // endregion
 
@@ -83,12 +81,6 @@ public class TrackService {
             themeDTOS.add(themeDTO);
         }
         return themeDTOS;
-    }
-
-    public ThemeDTO getThemeById(Integer id, Integer thId) throws Exception {
-        if (trackRepository.findById(id).orElseThrow().getThemes().contains(new Theme(thId))) {
-            return themeService.findById(thId);
-        } else throw new Exception("Le thème sélectionné ne correspond pas à la track sélectionnée !");
     }
 
     public void setTheme(Integer id, Integer thId) {

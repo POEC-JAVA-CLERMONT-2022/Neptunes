@@ -98,18 +98,6 @@ public class TrackController {
         }
     }
 
-    @GetMapping("{id}/themes/{thId}")
-    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable Integer id, @PathVariable Integer thId) {
-        try {
-            if (id != null && thId != null) {
-                return ResponseEntity.ok(trackService.getThemeById(id, thId));
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
     @PatchMapping("{id}/themes/{thId}")
     public ResponseEntity<String> setThemes(@PathVariable Integer id, @PathVariable Integer thId) {
         try {

@@ -17,9 +17,11 @@ public class ThemeService {
 
     // region Initialization
     private final ThemeRepository themeRepository;
+    private final TrackService trackService;
 
-    public ThemeService(ThemeRepository themeRepository) {
+    public ThemeService(ThemeRepository themeRepository, TrackService trackService) {
         this.themeRepository = themeRepository;
+        this.trackService = trackService;
     }
     // endregion
 
@@ -78,16 +80,13 @@ public class ThemeService {
     }
 
     public void addTrack(Integer id, Integer trId) {
-        Theme theme = themeRepository.findById(id).orElseThrow();
-        theme.getTracks().add(new Track(trId));
-        themeRepository.save(theme);
+        trackService.setTheme(trId, id);
     }
 
     public void removeTrack(Integer id, Integer trId) throws Exception {
         Theme theme = themeRepository.findById(id).orElseThrow();
         if (theme.getTracks().contains(new Track(trId))) {
-            theme.getTracks().remove(new Track(trId));
-            themeRepository.save(theme);
+            trackService.deleteTheme(trId, id);
         } else throw new Exception("La track indiquée n'appartient pas à ce thème !");
     }
     // endregion
