@@ -1,6 +1,7 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Playlist;
+import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.PlaylistRepository;
 import io.ipme.neptunes.Service.dto.PlaylistCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.PlaylistDTO;
@@ -65,4 +66,47 @@ public class PlaylistService {
         return playlistDTO;
     }
 
+    public PlaylistDTO addTracks(Integer id, List<Integer> tracksId) throws Exception {
+        Playlist playlist = playlistRepository.findById(id).orElseThrow();
+
+        List<Track> tracksToSave = new ArrayList<>();
+
+        for (Integer trackId : tracksId) {
+            if (!playlist.getTracks().contains(new Track(trackId))) {
+                tracksToSave.add(new Track(trackId));
+            }
+        }
+        if (tracksToSave.isEmpty()){
+            throw new Exception("cette valeur existe déjà dans la playlist "+id);
+        }
+
+        playlist.getTracks().addAll(tracksToSave);
+        playlistRepository.save(playlist);
+        /*DTO send back*/
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(playlist, playlistDTO);
+        return playlistDTO;
+    }
+
+    public PlaylistDTO removeTracks(Integer id, List<Integer> tracksId) throws Exception {
+        Playlist playlist = playlistRepository.findById(id).orElseThrow();
+
+        List<Track> tracksToDelete = new ArrayList<>();
+
+        for (Integer trackId : tracksId) {
+            if (playlist.getTracks().contains(new Track(trackId))) {
+                tracksToDelete.add(new Track(trackId));
+            }
+        }
+        if (tracksToDelete.isEmpty()){
+            throw new Exception("cette valeur n\'existe pas dans la playlist "+id);
+        }
+
+        playlist.getTracks().removeAll(tracksToDelete);
+        playlistRepository.save(playlist);
+        /*DTO send back*/
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(playlist, playlistDTO);
+        return playlistDTO;
+    }
 }

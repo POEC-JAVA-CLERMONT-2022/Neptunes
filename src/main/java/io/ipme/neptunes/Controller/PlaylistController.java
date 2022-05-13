@@ -79,4 +79,27 @@ public class PlaylistController {
         }
     }
 
+    @PostMapping("{id}/tracks")
+    public ResponseEntity<?> addTracks(@PathVariable Integer id, @RequestBody List<Integer> tracksId) {
+        try {
+            if (id != null && tracksId != null) {
+                return ResponseEntity.ok(playlistService.addTracks(id, tracksId));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}/tracks")
+    public ResponseEntity<?> removeTracks(@PathVariable Integer id, @RequestBody List<Integer> tracksId) {
+        try {
+            if (id != null && tracksId != null) {
+                return ResponseEntity.ok(playlistService.removeTracks(id, tracksId));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
