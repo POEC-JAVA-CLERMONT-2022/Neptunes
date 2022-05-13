@@ -102,4 +102,16 @@ public class PlaylistController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("random/{limit}")
+    public ResponseEntity<?> generateRandomPlaylist(@PathVariable Integer limit) {
+        try {
+            if (limit != null) {
+                return ResponseEntity.ok(playlistService.generateRandomPlaylist(limit));
+            }
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

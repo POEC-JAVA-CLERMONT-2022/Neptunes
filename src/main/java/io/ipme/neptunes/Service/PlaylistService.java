@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PlaylistService {
@@ -109,4 +110,21 @@ public class PlaylistService {
         BeanUtils.copyProperties(playlist, playlistDTO);
         return playlistDTO;
     }
+
+    public PlaylistDTO generateRandomPlaylist(Integer limit) throws Exception {
+
+        if (limit > 50) {
+            throw new Exception("une playlist aléatoire ne peut pas contenir plus de " + limit + " morceaux");
+        }
+
+        List<Integer> randomTracks = playlistRepository.getRandomTracks(limit);
+        PlaylistCreateUpdateDTO playlistCreateUpdateDTO = new PlaylistCreateUpdateDTO();
+        playlistCreateUpdateDTO.setRandom(true);
+        playlistCreateUpdateDTO.setName("playlist-" + UUID.randomUUID().toString().substring(0, 6));
+
+        PlaylistDTO randomPlaylistGenerated = this.save(playlistCreateUpdateDTO);
+
+        return this.addTracks(randomPlaylistGenerated.getId(), randomTracks);
+    }
+
 }
