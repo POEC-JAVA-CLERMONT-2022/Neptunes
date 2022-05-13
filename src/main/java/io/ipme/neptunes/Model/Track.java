@@ -38,12 +38,16 @@ public class Track {
     @ManyToMany(fetch = FetchType.LAZY)
     private List<Theme> themes;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "tracks")
     private Collection<Playlist> playlist;
 
     /*Constructors*/
 
     public Track() {
+    }
+
+    public Track(Integer id) {
+        this.id = id;
     }
 
     public Track(String trackName, String trackAuthor, Integer trackReleaseYear, String trackURL) {
@@ -95,4 +99,18 @@ public class Track {
         return themes;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Track)) return false;
+
+        Track track = (Track) o;
+
+        return id.equals(track.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

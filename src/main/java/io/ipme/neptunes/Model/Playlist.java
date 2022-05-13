@@ -26,7 +26,7 @@ public class Playlist {
     private Boolean isRandom;
 
     @NotNull
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "playlist")
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Track> tracks;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "playlist")
