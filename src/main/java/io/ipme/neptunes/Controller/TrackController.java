@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -91,18 +90,6 @@ public class TrackController {
         try {
             if (id != null) {
                 return ResponseEntity.ok(trackService.getThemes(id));
-            }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @GetMapping("{id}/themes/{thId}")
-    public ResponseEntity<ThemeDTO> getThemeById(@PathVariable Integer id, @PathVariable Integer thId) {
-        try {
-            if (id != null && thId != null) {
-                return ResponseEntity.ok(trackService.getThemeById(id, thId));
             }
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } catch (Exception e) {

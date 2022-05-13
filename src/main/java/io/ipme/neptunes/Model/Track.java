@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Track {
@@ -105,7 +106,6 @@ public class Track {
         if (!(o instanceof Track)) return false;
 
         Track track = (Track) o;
-
         return id.equals(track.id);
     }
 

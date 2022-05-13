@@ -1,9 +1,11 @@
 package io.ipme.neptunes.Service;
 
 import io.ipme.neptunes.Model.Theme;
+import io.ipme.neptunes.Model.Track;
 import io.ipme.neptunes.Repository.ThemeRepository;
 import io.ipme.neptunes.Service.dto.ThemeCreateUpdateDTO;
 import io.ipme.neptunes.Service.dto.ThemeDTO;
+import io.ipme.neptunes.Service.dto.TrackDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +15,17 @@ import java.util.List;
 @Service
 public class ThemeService {
 
-    private ThemeRepository themeRepository;
+    // region Initialization
+    private final ThemeRepository themeRepository;
+    private final TrackService trackService;
 
-    public ThemeService(ThemeRepository themeRepository) {
+    public ThemeService(ThemeRepository themeRepository, TrackService trackService) {
         this.themeRepository = themeRepository;
+        this.trackService = trackService;
     }
+    // endregion
 
+    // region CRUD
     public List<ThemeDTO> findAll() {
         List<ThemeDTO> themeDTOS = new ArrayList<>();
         for (Theme theme : themeRepository.findAll()) {
@@ -46,7 +53,6 @@ public class ThemeService {
     }
 
     public void deleteTheme(Integer id) {
-        // TODO : la suppression de theme doit également supprimer l'association avec la musique
         themeRepository.deleteById(id);
     }
 
@@ -60,5 +66,29 @@ public class ThemeService {
         BeanUtils.copyProperties(theme, themeDTO);
         return themeDTO;
     }
+    // endregion
+
+    //region Track
+    public List<TrackDTO> getTracks(Integer id) {
+        List<TrackDTO> trackDTOS = new ArrayList<>();
+        for (Track track : themeRepository.findById(id).orElseThrow().getTracks()) {
+            TrackDTO trackDTO = new TrackDTO();
+            BeanUtils.copyProperties(track, trackDTO);
+            trackDTOS.add(trackDTO);
+        }
+        return trackDTOS;
+    }
+
+    public void addTrack(Integer id, Integer trId) {
+        trackService.setTheme(trId, id);
+    }
+
+    public void removeTrack(Integer id, Integer trId) throws Exception {
+        Theme theme = themeRepository.findById(id).orElseThrow();
+        if (theme.getTracks().contains(new Track(trId))) {
+            trackService.deleteTheme(trId, id);
+        } else throw new Exception("La track indiquée n'appartient pas à ce thème !");
+    }
+    // endregion
 
 }
