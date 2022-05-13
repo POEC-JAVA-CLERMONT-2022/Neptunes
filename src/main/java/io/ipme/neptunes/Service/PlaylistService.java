@@ -66,7 +66,7 @@ public class PlaylistService {
         return playlistDTO;
     }
 
-    public PlaylistDTO addTracks(Integer id, List<Integer> tracksId) {
+    public PlaylistDTO addTracks(Integer id, List<Integer> tracksId) throws Exception {
         Playlist playlist = playlistRepository.findById(id).orElseThrow();
 
         List<Track> tracksToSave = new ArrayList<>();
@@ -76,7 +76,33 @@ public class PlaylistService {
                 tracksToSave.add(new Track(trackId));
             }
         }
+        if (tracksToSave.isEmpty()){
+            throw new Exception("cette valeur existe déjà dans la playlist "+id);
+        }
+
         playlist.getTracks().addAll(tracksToSave);
+        playlistRepository.save(playlist);
+        /*DTO send back*/
+        PlaylistDTO playlistDTO = new PlaylistDTO();
+        BeanUtils.copyProperties(playlist, playlistDTO);
+        return playlistDTO;
+    }
+
+    public PlaylistDTO removeTracks(Integer id, List<Integer> tracksId) throws Exception {
+        Playlist playlist = playlistRepository.findById(id).orElseThrow();
+
+        List<Track> tracksToDelete = new ArrayList<>();
+
+        for (Integer trackId : tracksId) {
+            if (playlist.getTracks().contains(new Track(trackId))) {
+                tracksToDelete.add(new Track(trackId));
+            }
+        }
+        if (tracksToDelete.isEmpty()){
+            throw new Exception("cette valeur n\'existe pas dans la playlist "+id);
+        }
+
+        playlist.getTracks().removeAll(tracksToDelete);
         playlistRepository.save(playlist);
         /*DTO send back*/
         PlaylistDTO playlistDTO = new PlaylistDTO();
