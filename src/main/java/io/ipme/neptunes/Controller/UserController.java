@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("users")
 // TODO : throw(new Exception) / Classe Exception personnalisable
 public class UserController {

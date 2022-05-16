@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("playlists")
 public class PlaylistController {
 
@@ -22,7 +23,6 @@ public class PlaylistController {
     }
 
     @GetMapping
-    @CrossOrigin
     public ResponseEntity<List<PlaylistDTO>> getAll() {
         try {
             return ResponseEntity.ok().body(playlistService.findAll());
@@ -104,7 +104,6 @@ public class PlaylistController {
         }
     }
     @PostMapping("random/{limit}")
-    @CrossOrigin
     public ResponseEntity<?> generateRandomPlaylist(@PathVariable Integer limit) {
         try {
             if (limit != null) {

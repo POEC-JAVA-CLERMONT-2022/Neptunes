@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("tracks")
 //TODO : utiliser des logger !!!
 public class TrackController {

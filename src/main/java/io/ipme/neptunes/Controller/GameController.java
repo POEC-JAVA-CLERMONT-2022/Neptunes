@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("games")
 public class GameController {
 
